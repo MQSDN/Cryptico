@@ -1,23 +1,25 @@
-# Cryptico
-
+# MR.Quiz
 
 ### Problem Domain:
-To increase awareness about crypto currencies between people. and help them to find proper details.
+Generate questions for the user to test their IQ and knowledge.
+
 
 ### What our App do:
-Allow users to know more about electronic currencies and keep track of their prices, and allow them to save currencies as favorites and see recent changes.
+To provide questions form different fields that will help the user to test their general knowledge or to create quiz's for different proposes.
 
 ### WireFrame:
-![WireFrame](Images/WireFrame.jpeg)
-
+![WireFrame](Images/Home.jpg)
+![WireFrame](Images/Quizzes.jpg)
+![WireFrame](Images/score.jpg)
 
 ### Team Members:
 Qusai Qishta
 
-Suhib Kharoush
-
 Malak Al-Momani
+
+Nihad Zeidan
+
+Suhib Kharoush
 
 Duha Yousef
 
-Nihad Zeidan
