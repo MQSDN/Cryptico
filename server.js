@@ -1,6 +1,6 @@
 'use strict';
 
-// All Dependencies Set-up.
+// All Dependencies Set-up
 const express = require('express');
 const superAgent = require('superagent');
 const cors = require('cors');
