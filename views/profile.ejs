@@ -8,13 +8,27 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Dashboard</title>
+    <title>profile</title>
   </head>
   <body>
     <h1>Profile</h1>
 
-    <a href="/users/logout">Logout</a>
+    <a href="/logout">Logout</a>
 
-    <h4>Hello <%= user.charAt(0).toUpperCase() + user.slice(1) %></h4>
+    <h4>Hello <%= results.name.charAt(0).toUpperCase() + results.name.slice(1) %></h4>
+
+
+    <form action="/quiz" method="POST">
+      <legend>Add Your Own Quiz</legend>
+      <fieldset>
+        <div> <input type="text" name="question" placeholder="Add Your Question" />  </div>
+        <div> <input type="text" name="optionA" placeholder="First Option" /></div>
+        <div> <input type="text" name="optionB" placeholder="Second Option" /></div>
+        <div> <input type="text" name="optionC" placeholder="Third Option" /></div>
+        <div> <input type="text" name="optionD" placeholder="Fourth Option" /></div>
+        <div> <input type="text" name="correctAnswer" placeholder="Add The Correct Answer" /></div>
+      
+      </fieldset>
+    </form>
   </body>
 </html>

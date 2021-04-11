@@ -23,6 +23,9 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login');
     });
+    app.get('/register', (req, res) => {
+      res.render('register');
+      });
     
 app.post('/register', handelRegister);
 
@@ -72,6 +75,11 @@ async function handelRegister(request, res) {
 
 }
 
+app.get("/logout", (req, res) => {
+  
+  res.render("index", { message: "You have logged out successfully" });
+});
+
 
 app.post('/login', handleLogin);
 
@@ -89,9 +97,10 @@ async function handleLogin(req, res) {
                 const validation = await bcrypt.compare(password, results.rows[0].pass)
 
                 if (validation) {
-                    res.send("Welcome");
+                
+                    res.render("profile",{results:results.rows[0]});
                 } else {
-                    res.send("Wrong PASS");
+                    res.send("Wrong Password");
                 };
 
             } else {
