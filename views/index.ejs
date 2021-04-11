@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Home</title>
-  </head>
-  <body>
+    <!-- <title>Home</title> -->
+</head>
+
+<body>
     <header>
-      <%- include('./layout/nav.ejs') %>
+        <%- include('./layout/header.ejs') %>
+            <%- include('./layout/nav.ejs') %>
     </header>
-    <h1>Home</h1>
-    <h2>quizzes</h2>
+    <!-- <h1>Home</h1>
+    <h2>quizzes</h2> -->
 
     <% if (typeof message !== 'undefined' ) { %>
-    <p><%= message %></p>
-    <% } %>
+        <p>
+            <%= message %>
+        </p>
+        <% } %>
+            <a class="starting" href="/login">Login</a>
+            <a class="registering" href="/register">register</a>
+</body>
+
+
 
     <a href="/login">Login</a>
+    <a href="/register">Register</a>
   </body>
+
 </html>
