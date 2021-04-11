@@ -2,17 +2,22 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="login.css">
     <title>Document</title>
 </head>
 
 <body>
 
     <header>
-        <h2>YOUR DATA ARE NOW IN THE DB, TRY TO Login</h2>
+        <%- include('./layout/nav.ejs') %>
+
+
+
+            <!-- <h2>YOUR DATA ARE NOW IN THE DB, TRY TO Login</h2> -->
     </header>
 
     <main>
-        <form action="/login" method="POST">
+        <!-- <form action="/login" method="POST">
             <fieldset>
                 Your Email
                 <input type="email" name="email"> </input>
@@ -21,9 +26,48 @@
 
                 <input type="submit" value="submit"> </input>
             </fieldset>
-        </form>
-    </main>
+        </form> -->
 
+
+
+        <div id="id01" class="modal">
+
+            <form class="modal-content animate" action="/login" method="post">
+                <div class="imgcontainer">
+                    <img src="https://www.hrzone.com/sites/all/themes/pp/img/default-user.png" alt="Avatar" class="avatar">
+                </div>
+
+                <div class="container">
+                    <label for="uname"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="uname" required>
+
+                    <label for="psw"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="psw" required>
+
+                    <button type="submit">Login</button>
+                    <label>
+                    </label>
+                    <br>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                </div>
+
+                <div class="container" style="background-color:#f1f1f1">
+                </div>
+            </form>
+        </div>
+
+    </main>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>
