@@ -147,15 +147,6 @@ function checkNotAuthenticated(req, res, next) {
   res.redirect("/users/login");
 }
 
-function myFunction() {
-    var x = document.getElementById("Password");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
-    }
-  }
-  myFunction();
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
