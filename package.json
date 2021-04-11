@@ -1,31 +1,31 @@
 {
-  "name": "cryptico",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MQSDN/Cryptico.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/MQSDN/Cryptico/issues"
-  },
-  "homepage": "https://github.com/MQSDN/Cryptico#readme",
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "dotenv": "^8.2.0",
-    "ejs": "^3.1.6",
-    "express": "^4.17.1",
-    "express-flash": "0.0.2",
-    "express-session": "^1.17.1",
-    "passport": "^0.4.1",
-    "passport-local": "^1.0.0",
-    "pg": "^8.5.1"
-  }
+    "name": "cryptico",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "nodemon server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MQSDN/Cryptico.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/MQSDN/Cryptico/issues"
+    },
+    "homepage": "https://github.com/MQSDN/Cryptico#readme",
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "dotenv": "^8.2.0",
+        "ejs": "^3.1.6",
+        "express": "^4.17.1",
+        "express-flash": "0.0.2",
+        "express-session": "^1.17.1",
+        "passport": "^0.4.1",
+        "passport-local": "^1.0.0",
+        "pg": "^8.5.1"
+    }
 }
