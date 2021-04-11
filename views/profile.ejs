@@ -14,9 +14,7 @@
 
     <a href="/logout">Logout</a>
 
-    <h4>Hello
-
-    </h4>
+    <h4>Hello </h4>
 
 
     <!-- <button type="submit"></button> -->
@@ -42,31 +40,31 @@
 
     <form action="/showAllQuestions" id="userQuestions" style="display: none;" method="POST">
 
-        <% result.forEach(fromDB=> {%>
+        <% results.forEach(fromDB => { %>
 
             <p>
                 <%= fromDB.question %>
             </p>
 
-            <input type="radio" name="optionA" value="<%= fromDB.optiona %>">
+            <input type="radio" value="<%= fromDB.optiona %>" required>
             <%= fromDB.optiona %>
                 </input>
 
                 <br />
 
-                <input type="radio" name="optionB" value="<%= fromDB.optionb %>">
+                <input type="radio" value="<%= fromDB.optionb %>" required>
                 <%= fromDB.optionb %>
                     </input>
 
                     <br />
 
-                    <input type="radio" name="optionC" value="<%= fromDB.optionc %>">
+                    <input type="radio" value="<%= fromDB.optionc %> " required>
                     <%= fromDB.optionc %>
                         </input>
 
                         <br />
 
-                        <input type="radio" name="optionD" value="<%= fromDB.optiond %>">
+                        <input type="radio" value="<%= fromDB.optiond %>" required>
 
                         <%= fromDB.optiond %>
 
@@ -74,7 +72,7 @@
 
                             <hr />
 
-                            <% }) %>
+                            <% }); %>
 
                                 <input type="submit" value="submit"> </input>
 
