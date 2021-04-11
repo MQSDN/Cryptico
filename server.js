@@ -6,7 +6,9 @@ const app = express();
 const pg = require('pg');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
-const { request } = require('express');
+
+const { request, response } = require('express');
+
 const PORT = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL;
 
@@ -20,6 +22,13 @@ app.use(express.static('public/styles'));
 app.get('/', (req, res) => {
     res.render('index');
 });
+
+
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
+app.post('/register', handelRegister);
 
 // ----------------------------------------------------------------
 app.post('/showAllQuestions', handleUserQuestions);
@@ -56,6 +65,7 @@ function handleQuiz(req, res) {
             res.render('profile', { result: result.rows });
         }
     });
+
 
 }
 
