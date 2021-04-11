@@ -22,14 +22,12 @@ app.get('/', (req, res) => {
 
 // ----------------------------------------------------------------
 
-app.post('/showAllQuestions', handleUserQuestions)
+app.post('/showAllQuestions', handleUserQuestions);
 
 function handleUserQuestions(req, res) {
-    $('button').on('click', function(event) {
-        $("#userQuestions").css('display', 'block');
-    });
 
 }
+
 
 
 app.post('/quiz', handleQuiz);
