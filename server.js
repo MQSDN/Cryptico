@@ -6,6 +6,7 @@ const app = express();
 const pg = require('pg');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const { request, response } = require('express');
 const PORT = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL;
 
@@ -22,8 +23,8 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('login');
-    });
-    
+});
+
 app.post('/register', handelRegister);
 
 
@@ -32,38 +33,38 @@ async function handelRegister(request, res) {
     try {
         const email = request.body.email;
         const password = request.body.pass;
-        
-        const name=request.body.name;
-        const password2=request.body.pass2; 
-        const date= request.body.date; 
-        let errors=[];
+
+        const name = request.body.name;
+        const password2 = request.body.pass2;
+        const date = request.body.date;
+        let errors = [];
         if (!name || !email || !password || !password2 || !date) {
-          errors.push({ message: "Please enter all fields" });
-      }
-  
-      if (password.length < 6) {
-          errors.push({ message: "Password must be a least 6 characters long" });
-      }
-  
-      if (password !== password2) {
-          errors.push({ message: "Passwords do not match" });
-      }
-      
-    if (errors.length > 0) {
-      res.render("register", { errors, name, email, password, password2 ,date })}
-      else{
+            errors.push({ message: "Please enter all fields" });
+        }
 
-        const hash = await bcrypt.hash(password, 10);
-        
+        if (password.length < 6) {
+            errors.push({ message: "Password must be a least 6 characters long" });
+        }
 
-        const safeValues = [name,email, hash,date];
-        const InsetIntoDataBaseQuery = 'INSERT INTO users (name,email, pass , date) VALUES ($1, $2,$3,$4);';
-        await client.query(InsetIntoDataBaseQuery, safeValues).then((results) => {
+        if (password !== password2) {
+            errors.push({ message: "Passwords do not match" });
+        }
 
-            res.render('login');
-        })
-      }
-  
+        if (errors.length > 0) {
+            res.render("register", { errors, name, email, password, password2, date })
+        } else {
+
+            const hash = await bcrypt.hash(password, 10);
+
+
+            const safeValues = [name, email, hash, date];
+            const InsetIntoDataBaseQuery = 'INSERT INTO users (name,email, pass , date) VALUES ($1, $2,$3,$4);';
+            await client.query(InsetIntoDataBaseQuery, safeValues).then((results) => {
+
+                res.render('login');
+            })
+        }
+
 
     } catch (error) {
         console.log(error);
