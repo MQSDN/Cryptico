@@ -1,152 +1,155 @@
 'use strict';
+require('dotenv').config();
 
-const express = require("express");
-const { pool } = require("./dbConfig");
-const bcrypt = require("bcrypt");
-const passport = require("passport");
-const flash = require("express-flash");
-const session = require("express-session");
-require("dotenv").config();
+const express = require('express');
 const app = express();
+const pg = require('pg');
+const cors = require('cors');
+const bcrypt = require('bcrypt');
+const { request } = require('express');
+const PORT = process.env.PORT;
+const DATABASE_URL = process.env.DATABASE_URL;
 
-
-const PORT = process.env.PORT || 3000;
-
-const initializePassport = require("./passportConfig");
-
-initializePassport(passport);
-
-// Middleware
-app.use(express.urlencoded({ extended: false }));
-app.set("view engine", "ejs");
-
-
-
-app.use(
-    session({
-        // Key we want to keep secret which will encrypt all of our information
-        secret: process.env.SESSION_SECRET,
-        // Should we resave our session variables if nothing has changes which we dont
-        resave: false,
-        // Save empty value if there is no value which we do not want to do
-        saveUninitialized: false
-    })
-);
-
-// Funtion inside passport which initializes passport
-app.use(passport.initialize());
-// Store our variables to be persisted across the whole session. Works with app.use(Session) above
-app.use(passport.session());
-app.use(flash());
-
-app.get("/", (req, res) => {
-    res.render("index");
+const client = new pg.Client({
+    connectionString: DATABASE_URL,
 });
 
-app.get("/users/register", checkAuthenticated, (req, res) => {
-    res.render("register.ejs");
+app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public/styles'));
+app.get('/', (req, res) => {
+    res.render('index');
 });
 
-app.get("/users/login", checkAuthenticated, (req, res) => {
-    // flash sets a messages variable. passport sets the error message
-    res.render("login.ejs");
+// ----------------------------------------------------------------
+app.post('/showAllQuestions', handleUserQuestions);
+
+function handleUserQuestions(req, res) {
+  const { optionA, optionB, optionC, optionD } = req.body;
+  console.log(optionA, optionB, optionC, optionD)
+  const correctAnswer='SELECT * FROM quiz;'
+  let score=0;
+client.query(correctAnswer).then(answer=>{
+  if(answer.rows.correctAnswer===optionA||answer.rows.correctAnswer===optionB||answer.rows.correctAnswer===optionC||answer.rows.correctAnswer===optionD){
+    score++;
+  }
+  console.log(score);
+})
+}
+
+
+app.post('/quiz', handleQuiz);
+
+function handleQuiz(req, res) {
+    const { question, optionA, optionB, optionC, optionD, correctAnswer } = req.body
+
+    const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer];
+    const sqlQuery = 'INSERT INTO quiz (question, optionA, optionB, optionC, optionD, correctAnswer) Values ($1, $2, $3, $4, $5, $6);'
+
+    client.query(sqlQuery, safeValues);
+
+    const getAllquestions = 'SELECT * FROM quiz;'
+
+    client.query(getAllquestions).then(result => {
+        console.log(result.rows);
+        if (result) {
+            res.render('profile', { result: result.rows });
+        }
+    });
+
+}
+
+app.get('/register', (req, res) => {
+    res.render('register');
 });
 
-app.get("/users/profile", checkNotAuthenticated, (req, res) => {
-    console.log(req.isAuthenticated());
-    res.render("profile", { user: req.user.name });
-});
+app.post('/register', handelRegister);
+async function handelRegister(request, res) {
 
-app.get("/users/logout", (req, res) => {
-    req.logout();
+    try {
+        const email = request.body.email;
+        const password = request.body.pass;
+
+        const name = request.body.name;
+        const password2 = request.body.pass2;
+        const date = request.body.date;
+        let errors = [];
+        if (!name || !email || !password || !password2 || !date) {
+            errors.push({ message: "Please enter all fields" });
+        }
+
+        if (password.length < 6) {
+            errors.push({ message: "Password must be a least 6 characters long" });
+        }
+
+        if (password !== password2) {
+            errors.push({ message: "Passwords do not match" });
+        }
+
+        if (errors.length > 0) {
+            res.render("register", { errors, name, email, password, password2, date })
+        } else {
+
+            const hash = await bcrypt.hash(password, 10);
+
+
+            const safeValues = [name, email, hash, date];
+            const InsetIntoDataBaseQuery = 'INSERT INTO users (name,email, pass , date) VALUES ($1, $2,$3,$4);';
+            await client.query(InsetIntoDataBaseQuery, safeValues).then((results) => {
+
+                res.render('login');
+            })
+        }
+
+
+    } catch (error) {
+        console.log(error);
+        res.send("CHECK YOU TERMINAL SOMETHING WENT WRONG");
+    }
+
+}
+
+
+
+app.get("/logout", (req, res) => {
     res.render("index", { message: "You have logged out successfully" });
 });
 
-app.post("/users/register", async(req, res) => {
-    let { name, email, password, password2 } = req.body;
 
-    let errors = [];
+app.get('/login', (req, res) => {
+    res.render('login');
+});
 
-    console.log({
-        name,
-        email,
-        password,
-        password2
-    });
+app.post('/login', handleLogin);
+async function handleLogin(req, res) {
+    try {
+        const email = req.body.email;
+        const password = req.body.password;
+        const safe = [email]
+        const getDataBaseQuery = 'SELECT * FROM users WHERE email=$1;';
+        await client.query(getDataBaseQuery, safe).then(async(results) => {
 
-    if (!name || !email || !password || !password2) {
-        errors.push({ message: "Please enter all fields" });
-    }
+            if (results) {
+                const validation = await bcrypt.compare(password, results.rows[0].pass)
 
-    if (password.length < 6) {
-        errors.push({ message: "Password must be a least 6 characters long" });
-    }
+                if (validation) {
 
-    if (password !== password2) {
-        errors.push({ message: "Passwords do not match" });
-    }
-
-    if (errors.length > 0) {
-        res.render("register", { errors, name, email, password, password2 });
-    } else {
-        hashedPassword = await bcrypt.hash(password, 10);
-        console.log(hashedPassword);
-        // Validation passed
-        pool.query(
-            `SELECT * FROM users
-        WHERE email = $1`, [email],
-            (err, results) => {
-                if (err) {
-                    console.log(err);
-                }
-
-                if (results.rows.length > 0) {
-                    return res.render("register", {
-                        message: "Email already registered"
-                    });
+                    res.render("profile", { result: [] });
                 } else {
-                    pool.query(
-                        `INSERT INTO users (name, email, password)
-                VALUES ($1, $2, $3)
-                RETURNING id, password`, [name, email, hashedPassword],
-                        (err, results) => {
-                            if (err) {
-                                throw err;
-                            }
-                            req.flash("success_msg", "You are now registered. Please log in");
-                            res.redirect("/users/login");
-                        }
-                    );
-                }
-            }
-        );
-    }
-});
+                    res.send("Wrong Password");
+                };
 
-app.post(
-    "/users/login",
-    passport.authenticate("local", {
-        successRedirect: "/users/profile",
-        failureRedirect: "/users/login",
-        failureFlash: true
-    })
+            } else {
+                res.send("No such data in theD DB");
+            };
+        });
+
+    } catch (error) {
+        console.log(error);
+    };
+
+};
+
+client.connect().then(() =>
+    app.listen(PORT, () => console.log(`Listening on port: ${PORT}`))
 );
-
-function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return res.redirect("/users/profile");
-    }
-    next();
-}
-
-function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/users/login");
-}
-
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
