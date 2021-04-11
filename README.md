@@ -11,6 +11,7 @@ To provide questions from different fields (Science, Math, history, Art) that wi
 ![WireFrame](Images/Home.jpg)
 ![WireFrame](Images/Quizzes.jpg)
 ![WireFrame](Images/score.jpg)
+![DataBase](Images/DB.png)
 
 
 ### Non-functional requirement: 
