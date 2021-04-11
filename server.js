@@ -16,7 +16,7 @@ const client = new pg.Client({
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public/styles'));
+app.use(express.static("./public"));
 app.get('/', (req, res) => {
     res.render('index');
 });
@@ -94,7 +94,7 @@ async function handleLogin(req, res) {
                 const validation = await bcrypt.compare(password, results.rows[0].pass)
 
                 if (validation) {
-                    res.render("../views/profile", { user: email, questions: [] })
+                    res.render("../views/quiz", { questions: [] })
                 } else {
                     res.send("Wrong PASS");
                 };
@@ -125,19 +125,35 @@ function startQuiz(req, res) {
     superagent.get(url).then(resData => {
         const questions = resData.body.results.map(question => {
             return new Question(question);
-        })
-        res.render('profile', { user: 'malak', questions: questions })
+        });
+        res.render('quiz', { questions: questions })
     }).catch(error => {
         console.error('ERROR', error);
         res.status(404).send('Sorry , Something went wrong');
     });
 }
 
+function decodeHtml(str) {
+    var map = {
+        '&amp;': '&',
+        '&lt;': '<',
+        '&gt;': '>',
+        '&quot;': '"',
+        '&#039;': "'",
+        '&pi;': 'PI'
+    };
+    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m) { return map[m]; });
+}
+
 
 function Question(question) {
-    this.questionText = question.question;
-    this.choices = [question.incorrect_answers[0], question.incorrect_answers[1], question.incorrect_answers[2], question.correct_answer];
-    this.correct_answer = question.correct_answer;
+    this.questionText = decodeHtml(question.question);
+    this.choices = [decodeHtml(question.incorrect_answers[0]),
+        decodeHtml(question.incorrect_answers[1]),
+        decodeHtml(question.incorrect_answers[2]),
+        decodeHtml(question.correct_answer)
+    ];
+    this.correct_answer = decodeHtml(question.correct_answer);
 }
 
 client.connect().then(() =>
