@@ -20,53 +20,81 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get('/login', (req, res) => {
-    res.render('login');
+// ----------------------------------------------------------------
+
+app.post('/showAllQuestions', handleUserQuestions)
+
+function handleUserQuestions(req, res) {
+    $('button').on('click', function(event) {
+        $("#userQuestions").css('display', 'block');
     });
-    app.get('/register', (req, res) => {
-      res.render('register');
-      });
-    
+
+}
+
+
+app.post('/quiz', handleQuiz);
+
+function handleQuiz(req, res) {
+    const { question, optionA, optionB, optionC, optionD, correctAnswer } = req.body
+
+    const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer];
+    const sqlQuery = 'INSERT INTO quiz (question, optionA, optionB, optionC, optionD, correctAnswer) Values ($1, $2, $3, $4, $5, $6);'
+
+    client.query(sqlQuery, safeValues);
+
+    const getAllquestions = 'SELECT * FROM quiz;'
+
+    client.query(getAllquestions).then(result => {
+        console.log(result.rows);
+        if (result) {
+            res.render('profile', { result: result.rows });
+        }
+    });
+
+}
+
+app.get('/register', (req, res) => {
+    res.render('register');
+});
+
 app.post('/register', handelRegister);
-
-
 async function handelRegister(request, res) {
 
     try {
         const email = request.body.email;
         const password = request.body.pass;
-        
-        const name=request.body.name;
-        const password2=request.body.pass2; 
-        const date= request.body.date; 
-        let errors=[];
+
+        const name = request.body.name;
+        const password2 = request.body.pass2;
+        const date = request.body.date;
+        let errors = [];
         if (!name || !email || !password || !password2 || !date) {
-          errors.push({ message: "Please enter all fields" });
-      }
-  
-      if (password.length < 6) {
-          errors.push({ message: "Password must be a least 6 characters long" });
-      }
-  
-      if (password !== password2) {
-          errors.push({ message: "Passwords do not match" });
-      }
-      
-    if (errors.length > 0) {
-      res.render("register", { errors, name, email, password, password2 ,date })}
-      else{
+            errors.push({ message: "Please enter all fields" });
+        }
 
-        const hash = await bcrypt.hash(password, 10);
-        
+        if (password.length < 6) {
+            errors.push({ message: "Password must be a least 6 characters long" });
+        }
 
-        const safeValues = [name,email, hash,date];
-        const InsetIntoDataBaseQuery = 'INSERT INTO users (name,email, pass , date) VALUES ($1, $2,$3,$4);';
-        await client.query(InsetIntoDataBaseQuery, safeValues).then((results) => {
+        if (password !== password2) {
+            errors.push({ message: "Passwords do not match" });
+        }
 
-            res.render('login');
-        })
-      }
-  
+        if (errors.length > 0) {
+            res.render("register", { errors, name, email, password, password2, date })
+        } else {
+
+            const hash = await bcrypt.hash(password, 10);
+
+
+            const safeValues = [name, email, hash, date];
+            const InsetIntoDataBaseQuery = 'INSERT INTO users (name,email, pass , date) VALUES ($1, $2,$3,$4);';
+            await client.query(InsetIntoDataBaseQuery, safeValues).then((results) => {
+
+                res.render('login');
+            })
+        }
+
 
     } catch (error) {
         console.log(error);
@@ -75,17 +103,19 @@ async function handelRegister(request, res) {
 
 }
 
+
+
 app.get("/logout", (req, res) => {
-  
-  res.render("index", { message: "You have logged out successfully" });
+    res.render("index", { message: "You have logged out successfully" });
 });
 
 
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
 app.post('/login', handleLogin);
-
 async function handleLogin(req, res) {
-
-
     try {
         const email = req.body.email;
         const password = req.body.password;
@@ -97,8 +127,8 @@ async function handleLogin(req, res) {
                 const validation = await bcrypt.compare(password, results.rows[0].pass)
 
                 if (validation) {
-                
-                    res.render("profile",{results:results.rows[0]});
+
+                    res.render("profile", { result: [] });
                 } else {
                     res.send("Wrong Password");
                 };

@@ -1,34 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>profile</title>
-  </head>
-  <body>
+</head>
+
+<body>
     <h1>Profile</h1>
 
     <a href="/logout">Logout</a>
 
-    <h4>Hello <%= results.name.charAt(0).toUpperCase() + results.name.slice(1) %></h4>
+    <h4>Hello
+
+    </h4>
+
+
+    <!-- <button type="submit"></button> -->
 
 
     <form action="/quiz" method="POST">
-      <legend>Add Your Own Quiz</legend>
-      <fieldset>
-        <div> <input type="text" name="question" placeholder="Add Your Question" />  </div>
-        <div> <input type="text" name="optionA" placeholder="First Option" /></div>
-        <div> <input type="text" name="optionB" placeholder="Second Option" /></div>
-        <div> <input type="text" name="optionC" placeholder="Third Option" /></div>
-        <div> <input type="text" name="optionD" placeholder="Fourth Option" /></div>
-        <div> <input type="text" name="correctAnswer" placeholder="Add The Correct Answer" /></div>
-      
-      </fieldset>
+        <legend>Add Your Own Quiz</legend>
+        <fieldset>
+            <div> <input type="text" name="question" placeholder="Add Your Question" /> </div>
+            <div> <input type="text" name="optionA" placeholder="First Option" /></div>
+            <div> <input type="text" name="optionB" placeholder="Second Option" /></div>
+            <div> <input type="text" name="optionC" placeholder="Third Option" /></div>
+            <div> <input type="text" name="optionD" placeholder="Fourth Option" /></div>
+            <div> <input type="text" name="correctAnswer" placeholder="Add The Correct Answer" /></div>
+            <div> <input type="submit" name="submit" placeholder="Add your question" /></div>
+        </fieldset>
     </form>
-  </body>
+
+
+
+    <button type="submit"></button>
+
+
+    <form action="/showAllQuestions" id="userQuestions" style="display: none;" method="POST">
+
+        <% result.forEach(fromDB => {%>
+
+            <input type="text">
+            <p>
+                <%= fromDB.question %>
+            </p>
+            </input>
+
+            <input type="radio" value="<%= fromDB.optiona %>">
+            <p>
+                <%= fromDB.optiona %>
+            </p>
+            </input>
+
+            <input type="radio" value="<%= fromDB.optionb %>">
+            <p>
+                <%= fromDB.optionb %>
+            </p>
+            </input>
+
+            <input type="radio" value="<%= fromDB.optionc %>">
+            <p>
+                <%= fromDB.optionc %>
+            </p>
+            </input>
+
+            <input type="radio" value="<%= fromDB.optiond %>">
+            <p>
+                <%= fromDB.optiond %>
+            </p>
+            </input>
+
+            <input type="submit" value="submit">
+
+            <% }) %>
+
+    </form>
+
+
+
+
+</body>
+
 </html>
