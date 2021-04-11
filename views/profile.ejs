@@ -1,20 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Dashboard</title>
-  </head>
-  <body>
-    <h1>Profile</h1>
+</head>
 
-    <a href="/users/logout">Logout</a>
+<body>
+    <header>
+        <h1>Profile</h1>
+    </header>
+    <main>
+        <h4>Hello
+            <%= user.charAt(0).toUpperCase() + user.slice(1) %>
+        </h4>
 
-    <h4>Hello <%= user.charAt(0).toUpperCase() + user.slice(1) %></h4>
-  </body>
+        <form action="/start" method="get">
+            <label for="category">Choose Category:</label>
+
+            <select name="category" id="category">
+                <option value="choose">choose category ...</option>
+                <optgroup label="Entertainment">
+                  <option value="Books">Books</option>
+                  <option value="Film">Film</option>
+                  <option value="Music">Music</option>
+                  <option value="Television">Television</option>
+                  <option value="video_games">Video Games</option>
+                  <option value="board_games">Board Games</option>
+                  <option value="Comics">Comics</option>
+                  <option value="Cartoon&Animation">Cartoon & Animation</option>
+                </optgroup>
+                <optgroup label="Science">
+                  <option value="Nature">Nature</option>
+                  <option value="Computers">Computers</option>
+                  <option value="Mathemetics">Mathemetics</option>
+                </optgroup>
+                  
+                </select>
+        </form>
+    </main>
+
+
+
+    <footer>
+        <a href="/users/logout">Logout</a>
+    </footer>
+</body>
+
 </html>

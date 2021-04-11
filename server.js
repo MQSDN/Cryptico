@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 const pg = require('pg');
 const cors = require('cors');
+const superagent = require('superagent');
 const bcrypt = require('bcrypt');
 const PORT = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -29,38 +30,38 @@ async function handelRegister(request, res) {
     try {
         const email = request.body.email;
         const password = request.body.pass;
-        
-        const name=request.body.name;
-        const password2=request.body.pass2; 
-        const date= request.body.date; 
-        let errors=[];
+
+        const name = request.body.name;
+        const password2 = request.body.pass2;
+        const date = request.body.date;
+        let errors = [];
         if (!name || !email || !password || !password2 || !date) {
-          errors.push({ message: "Please enter all fields" });
-      }
-  
-      if (password.length < 6) {
-          errors.push({ message: "Password must be a least 6 characters long" });
-      }
-  
-      if (password !== password2) {
-          errors.push({ message: "Passwords do not match" });
-      }
-      
-    if (errors.length > 0) {
-      res.render("register", { errors, name, email, password, password2 ,date })}
-      else{
+            errors.push({ message: "Please enter all fields" });
+        }
 
-        const hash = await bcrypt.hash(password, 10);
-        
+        if (password.length < 6) {
+            errors.push({ message: "Password must be a least 6 characters long" });
+        }
 
-        const safeValues = [name,email, hash,date];
-        const InsetIntoDataBaseQuery = 'INSERT INTO users (name,email, pass , date) VALUES ($1, $2,$3,$4);';
-        await client.query(InsetIntoDataBaseQuery, safeValues).then((results) => {
+        if (password !== password2) {
+            errors.push({ message: "Passwords do not match" });
+        }
 
-            res.render('login');
-        })
-      }
-  
+        if (errors.length > 0) {
+            res.render("register", { errors, name, email, password, password2, date })
+        } else {
+
+            const hash = await bcrypt.hash(password, 10);
+
+
+            const safeValues = [name, email, hash, date];
+            const InsetIntoDataBaseQuery = 'INSERT INTO users (name,email, pass , date) VALUES ($1, $2,$3,$4);';
+            await client.query(InsetIntoDataBaseQuery, safeValues).then((results) => {
+
+                res.render('login');
+            })
+        }
+
 
     } catch (error) {
         console.log(error);
@@ -86,7 +87,7 @@ async function handleLogin(req, res) {
                 const validation = await bcrypt.compare(password, results.rows[0].pass)
 
                 if (validation) {
-                    res.send("Welcome");
+                    res.render("../views/profile", { user: email })
                 } else {
                     res.send("Wrong PASS");
                 };
@@ -99,8 +100,13 @@ async function handleLogin(req, res) {
     } catch (error) {
         console.log(error);
     };
-
+    res.render("../views/profile", { user: email })
 };
+
+
+////////////////////////////////////////////////////////////// Quizzes Part
+
+
 
 client.connect().then(() =>
     app.listen(PORT, () => console.log(`Listening on port: ${PORT}`))
