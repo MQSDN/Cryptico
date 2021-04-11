@@ -23,8 +23,12 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('login');
-    });
-    
+});
+
+app.get('/register', (req, res) => {
+    res.render('register')
+});
+
 app.post('/register', handelRegister);
 
 
@@ -90,7 +94,7 @@ async function handleLogin(req, res) {
                 const validation = await bcrypt.compare(password, results.rows[0].pass)
 
                 if (validation) {
-                    res.render("../views/profile", { user: email })
+                    res.render("../views/profile", { user: email, questions: [] })
                 } else {
                     res.send("Wrong PASS");
                 };
@@ -103,13 +107,38 @@ async function handleLogin(req, res) {
     } catch (error) {
         console.log(error);
     };
-    res.render("../views/profile", { user: email })
 };
 
 
 ////////////////////////////////////////////////////////////// Quizzes Part
+app.post('/start', startQuiz);
+
+function startQuiz(req, res) {
+
+    const queryObject = {
+        category: req.body.category,
+        difficulty: req.body.level
+    }
+    console.log(queryObject);
+    const url = `https://opentdb.com/api.php?amount=10&category=${queryObject.category}&difficulty=${queryObject.difficulty}&type=multiple`;
+    console.log(url);
+    superagent.get(url).then(resData => {
+        const questions = resData.body.results.map(question => {
+            return new Question(question);
+        })
+        res.render('profile', { user: 'malak', questions: questions })
+    }).catch(error => {
+        console.error('ERROR', error);
+        res.status(404).send('Sorry , Something went wrong');
+    });
+}
 
 
+function Question(question) {
+    this.questionText = question.question;
+    this.choices = [question.incorrect_answers[0], question.incorrect_answers[1], question.incorrect_answers[2], question.correct_answer];
+    this.correct_answer = question.correct_answer;
+}
 
 client.connect().then(() =>
     app.listen(PORT, () => console.log(`Listening on port: ${PORT}`))
