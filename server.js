@@ -21,9 +21,14 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get('/login', (req, res) => {
-    res.render('login');
+
+// ---------------------------------
+app.get("/logout", (req, res) => {
+    res.render("index", { message: "You have logged out successfully" });
 });
+
+// ---------------------------------
+
 
 app.get('/register', (req, res) => {
     res.render('register')
@@ -76,13 +81,16 @@ async function handelRegister(request, res) {
     }
 
 }
+// ---------------------------------
 
+
+app.get('/login', (req, res) => {
+    res.render('login');
+});
 
 app.post('/login', handleLogin);
 
 async function handleLogin(req, res) {
-
-
     try {
         const email = req.body.email;
         const password = req.body.password;
@@ -94,13 +102,13 @@ async function handleLogin(req, res) {
                 const validation = await bcrypt.compare(password, results.rows[0].pass)
 
                 if (validation) {
-                    res.render("../views/quiz", { questions: [] })
+                    res.render("profile", { results: results.rows })
                 } else {
                     res.send("Wrong PASS");
                 };
 
             } else {
-                res.send("No such data in theD DB");
+                res.send("No such data in the DB");
             };
         });
 
@@ -108,6 +116,41 @@ async function handleLogin(req, res) {
         console.log(error);
     };
 };
+
+
+// ---------------------------------
+app.post('/quiz', handleQuiz);
+
+function handleQuiz(req, res) {
+    const { question, optionA, optionB, optionC, optionD, correctAnswer } = req.body
+
+    const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer];
+    const sqlQuery = 'INSERT INTO quiz (question, optionA, optionB, optionC, optionD, correctAnswer) Values ($1, $2, $3, $4, $5, $6);'
+
+    client.query(sqlQuery, safeValues);
+
+    const getAllQuestions = 'SELECT * FROM quiz;'
+    client.query(getAllQuestions).then(result => {
+        if (result) {
+            res.render('profile', { results: result.rows });
+        }
+    });
+
+}
+
+app.post('/showAllQuestions', handleUserQuestions);
+
+function handleUserQuestions(req, res) {
+    const { value } = req.body;
+    const correctAnswer = 'SELECT * FROM quiz;'
+    let score = 0;
+    client.query(correctAnswer).then(answer => {
+        if (answer.rows.correctAnswer === value) {
+            score++;
+        }
+        console.log(score);
+    })
+}
 
 
 ////////////////////////////////////////////////////////////// Quizzes Part
