@@ -5,10 +5,8 @@ const express = require('express');
 const app = express();
 const pg = require('pg');
 const cors = require('cors');
+const superagent = require('superagent');
 const bcrypt = require('bcrypt');
-
-const { request, response } = require('express');
-
 const PORT = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL;
 
@@ -18,62 +16,22 @@ const client = new pg.Client({
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public/styles'));
+app.use(express.static("./public"));
 app.get('/', (req, res) => {
     res.render('index');
 });
-
 
 app.get('/login', (req, res) => {
     res.render('login');
 });
 
-app.post('/register', handelRegister);
-
-// ----------------------------------------------------------------
-app.post('/showAllQuestions', handleUserQuestions);
-
-function handleUserQuestions(req, res) {
-  const { optionA, optionB, optionC, optionD } = req.body;
-  console.log(optionA, optionB, optionC, optionD)
-  const correctAnswer='SELECT * FROM quiz;'
-  let score=0;
-client.query(correctAnswer).then(answer=>{
-  if(answer.rows.correctAnswer===optionA||answer.rows.correctAnswer===optionB||answer.rows.correctAnswer===optionC||answer.rows.correctAnswer===optionD){
-    score++;
-  }
-  console.log(score);
-})
-}
-
-
-app.post('/quiz', handleQuiz);
-
-function handleQuiz(req, res) {
-    const { question, optionA, optionB, optionC, optionD, correctAnswer } = req.body
-
-    const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer];
-    const sqlQuery = 'INSERT INTO quiz (question, optionA, optionB, optionC, optionD, correctAnswer) Values ($1, $2, $3, $4, $5, $6);'
-
-    client.query(sqlQuery, safeValues);
-
-    const getAllquestions = 'SELECT * FROM quiz;'
-
-    client.query(getAllquestions).then(result => {
-        console.log(result.rows);
-        if (result) {
-            res.render('profile', { result: result.rows });
-        }
-    });
-
-
-}
-
 app.get('/register', (req, res) => {
-    res.render('register');
+    res.render('register')
 });
 
 app.post('/register', handelRegister);
+
+
 async function handelRegister(request, res) {
 
     try {
@@ -120,18 +78,11 @@ async function handelRegister(request, res) {
 }
 
 
-
-app.get("/logout", (req, res) => {
-    res.render("index", { message: "You have logged out successfully" });
-});
-
-
-app.get('/login', (req, res) => {
-    res.render('login');
-});
-
 app.post('/login', handleLogin);
+
 async function handleLogin(req, res) {
+
+
     try {
         const email = req.body.email;
         const password = req.body.password;
@@ -143,10 +94,9 @@ async function handleLogin(req, res) {
                 const validation = await bcrypt.compare(password, results.rows[0].pass)
 
                 if (validation) {
-
-                    res.render("profile", { result: [] });
+                    res.render("../views/quiz", { questions: [] })
                 } else {
-                    res.send("Wrong Password");
+                    res.send("Wrong PASS");
                 };
 
             } else {
@@ -157,8 +107,54 @@ async function handleLogin(req, res) {
     } catch (error) {
         console.log(error);
     };
-
 };
+
+
+////////////////////////////////////////////////////////////// Quizzes Part
+app.post('/start', startQuiz);
+
+function startQuiz(req, res) {
+
+    const queryObject = {
+        category: req.body.category,
+        difficulty: req.body.level
+    }
+    console.log(queryObject);
+    const url = `https://opentdb.com/api.php?amount=10&category=${queryObject.category}&difficulty=${queryObject.difficulty}&type=multiple`;
+    console.log(url);
+    superagent.get(url).then(resData => {
+        const questions = resData.body.results.map(question => {
+            return new Question(question);
+        });
+        res.render('quiz', { questions: questions })
+    }).catch(error => {
+        console.error('ERROR', error);
+        res.status(404).send('Sorry , Something went wrong');
+    });
+}
+
+function decodeHtml(str) {
+    var map = {
+        '&amp;': '&',
+        '&lt;': '<',
+        '&gt;': '>',
+        '&quot;': '"',
+        '&#039;': "'",
+        '&pi;': 'PI'
+    };
+    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m) { return map[m]; });
+}
+
+
+function Question(question) {
+    this.questionText = decodeHtml(question.question);
+    this.choices = [decodeHtml(question.incorrect_answers[0]),
+        decodeHtml(question.incorrect_answers[1]),
+        decodeHtml(question.incorrect_answers[2]),
+        decodeHtml(question.correct_answer)
+    ];
+    this.correct_answer = decodeHtml(question.correct_answer);
+}
 
 client.connect().then(() =>
     app.listen(PORT, () => console.log(`Listening on port: ${PORT}`))

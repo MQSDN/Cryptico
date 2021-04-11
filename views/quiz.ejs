@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/layout.css">
+    <title>Quiz</title>
+</head>
+
+<body>
+    <header>
+
+    </header>
+    <main>
+        <form action="/start" method="post">
+
+
+            <input type="radio" name="level" value="easy" required> Easy </input>
+            <input type="radio" name="level" value="medium"> Medium </input>
+            <input type="radio" name="level" value="hard"> Hard </input>
+            <hr />
+            <button type="submit">
+                <div class="category" id="nature">
+                    <input type="hidden" name="category" value="17"> Science & Nature </input>
+                </div>
+            </button>
+
+
+            <!-- <button type="submit">Start</button> -->
+
+        </form>
+
+
+
+        <!-- <div class="category"></div>
+      <div class="category"></div>
+      <div class="category"></div>
+      <div class="category"></div>
+      <div class="category"></div>
+      <div class="category"></div>
+      <div class="category"></div>
+      <div class="category"></div> -->
+        <!-- <fieldset>
+                <select name="category" id="category">
+          <option value="choose">choose category ...</option>
+            <!-- <option value="Any">Any</option>
+            <optgroup label="Science">
+                <option value="17">Nature</option>
+                <option value="18">Computers</option>
+                <option value="19">Mathemetics</option>
+                = </optgroup>
+            <optgroup label="General">
+                <option value="9">General Knowledge</option>
+                <option value="23">History</option>
+                <option value="22">Geography</option>
+                <option value="21">Sports</option>
+                <option value="25">Celebrities</option>
+                <option value="28">Vehicles</option>
+                <option value="20">Mythology</option>
+            </optgroup>
+            <optgroup label="Entertainment">
+                <option value="10">Books</option>
+                <option value="11">Film</option>
+                <option value="12">Music</option>
+                <option value="14">Television</option>
+                <option value="15">Video Games</option>
+                <option value="16">Board Games</option>
+                <option value="29">Comics</option>
+                <option value="32">Cartoon & Animation</option>
+            </optgroup>
+
+            </select>
+            
+
+            </fieldset>
+        </form>-->
+
+        <% questions.forEach(question=> {%>
+            <div class="question">
+                <h5>
+                    <%= question.questionText %>
+                </h5>
+                <form action="/check" method="post">
+                    <input type="radio" name="answer" value="<%= question.choices[0] %>">
+                    <%= question.choices[0] %>
+                        </input>
+                        <input type="radio" name="answer" value="<%= question.choices[1] %>">
+                        <%= question.choices[1] %>
+                            </input>
+                            <input type="radio" name="answer" value="<%= question.choices[2] %>">
+                            <%= question.choices[2] %>
+                                </input>
+                                <input type="radio" name="answer" value="<%= question.choices[3] %>">
+                                <%= question.choices[3] %>
+                                    </input>
+                                    <button type="submit"> check </button>
+                </form>
+            </div>
+            <% }) %>
+    </main>
+    <footer>
+        <a href="/users/logout">Logout</a>
+    </footer>
+</body>
+
+</html>

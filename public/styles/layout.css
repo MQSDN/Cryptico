@@ -1,0 +1,28 @@
+body {
+    background-color: #aaf5ff;
+}
+
+.category {
+    display: inline-block;
+    background-color: rgb(218, 249, 255);
+    width: 250px;
+    height: 300px;
+    border: rgb(3, 129, 138) 4px solid;
+    border-radius: 20px;
+    transition-property: background-color;
+    transition-duration: 1s;
+    transition-timing-function: linear;
+    transition: all .4s ease-in-out;
+    cursor: pointer;
+}
+
+.category:hover {
+    background-color: #ebd2e9;
+    transform: scale(1.1);
+    box-shadow: 10px 10px 10px rgb(80, 70, 70);
+}
+
+form button {
+    background-color: rgba(255, 0, 0, 0);
+    border: unset;
+}
