@@ -2,95 +2,95 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>profile</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>profile</title>
 </head>
 
 <body>
-    <h1>Profile</h1>
+  <h1>Profile</h1>
 
-    <a href="/logout">Logout</a>
+  <a href="/logout">Logout</a>
 
-    <h4>Hello
+  <h4>Hello
 
-    </h4>
-
-
-    <!-- <button type="submit"></button> -->
+  </h4>
 
 
-    <form action="/quiz" method="POST">
-        <legend>Add Your Own Quiz</legend>
-        <fieldset>
-            <div> <input type="text" name="question" placeholder="Add Your Question" /> </div>
-            <div> <input type="text" name="optionA" placeholder="First Option" /></div>
-            <div> <input type="text" name="optionB" placeholder="Second Option" /></div>
-            <div> <input type="text" name="optionC" placeholder="Third Option" /></div>
-            <div> <input type="text" name="optionD" placeholder="Fourth Option" /></div>
-            <div> <input type="text" name="correctAnswer" placeholder="Add The Correct Answer" /></div>
-            <div> <input type="submit" name="submit" placeholder="Add your question" /></div>
-        </fieldset>
-    </form>
+  <!-- <button type="submit"></button> -->
+
+
+  <form action="/quiz" method="POST">
+    <legend>Add Your Own Quiz</legend>
+    <fieldset>
+      <div> <input type="text" name="question" placeholder="Add Your Question" /> </div>
+      <div> <input type="text" name="optionA" placeholder="First Option" /></div>
+      <div> <input type="text" name="optionB" placeholder="Second Option" /></div>
+      <div> <input type="text" name="optionC" placeholder="Third Option" /></div>
+      <div> <input type="text" name="optionD" placeholder="Fourth Option" /></div>
+      <div> <input type="text" name="correctAnswer" placeholder="Add The Correct Answer" /></div>
+      <div> <input type="submit" name="submit" placeholder="Add your question" /></div>
+    </fieldset>
+  </form>
 
 
 
-    <button id="toRenderQuestions" type="submit"> Show my questions</button>
+  <button id="toRenderQuestions" type="submit"> Show my questions</button>
 
 
-    <form action="/showAllQuestions" id="userQuestions" style="display: none;" method="POST">
+  <form action="/showAllQuestions" id="userQuestions" style="display: none;" method="POST">
 
-        <% result.forEach(fromDB => {%>
+    <% result.forEach(fromDB=> {%>
 
-            <p>
-                <%= fromDB.question %>
-            </p>
+      <p>
+        <%= fromDB.question %>
+      </p>
 
-            <input type="radio" value="<%= fromDB.optiona %>">
-            <%= fromDB.optiona %>
-                </input>
+      <input type="radio" name="optionA" value="<%= fromDB.optiona %>">
+      <%= fromDB.optiona %>
+        </input>
 
-                <br />
+        <br />
 
-                <input type="radio" value="<%= fromDB.optionb %>">
-                <%= fromDB.optionb %>
-                    </input>
+        <input type="radio" name="optionB" value="<%= fromDB.optionb %>">
+        <%= fromDB.optionb %>
+          </input>
 
-                    <br />
+          <br />
 
-                    <input type="radio" value="<%= fromDB.optionc %>">
-                    <%= fromDB.optionc %>
-                        </input>
+          <input type="radio" name="optionC" value="<%= fromDB.optionc %>">
+          <%= fromDB.optionc %>
+            </input>
 
-                        <br />
+            <br />
 
-                        <input type="radio" value="<%= fromDB.optiond %>">
+            <input type="radio" name="optionD" value="<%= fromDB.optiond %>">
 
-                        <%= fromDB.optiond %>
+            <%= fromDB.optiond %>
 
-                            </input>
+              </input>
 
-                            <hr />
+              <hr />
 
-                            <% }) %>
+              <% }) %>
 
-                                <input type="submit" value="submit"> </input>
+                <input type="submit" value="submit"> </input>
 
-    </form>
+  </form>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-    </script>
-    <script>
-        function handleButton(req, res) {
-            $('#toRenderQuestions').on('click', function(event) {
-                $("#userQuestions").css('display', 'block');
-            });
-        }
-        handleButton();
-    </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+  </script>
+  <script>
+    function handleButton(req, res) {
+      $('#toRenderQuestions').on('click', function (event) {
+        $("#userQuestions").css('display', 'block');
+      });
+    }
+    handleButton();
+  </script>
 
 
 </body>

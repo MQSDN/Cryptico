@@ -6,6 +6,7 @@ const app = express();
 const pg = require('pg');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const { request } = require('express');
 const PORT = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL;
 
@@ -21,13 +22,20 @@ app.get('/', (req, res) => {
 });
 
 // ----------------------------------------------------------------
-
 app.post('/showAllQuestions', handleUserQuestions);
 
 function handleUserQuestions(req, res) {
-
+  const { optionA, optionB, optionC, optionD } = req.body;
+  console.log(optionA, optionB, optionC, optionD)
+  const correctAnswer='SELECT * FROM quiz;'
+  let score=0;
+client.query(correctAnswer).then(answer=>{
+  if(answer.rows.correctAnswer===optionA||answer.rows.correctAnswer===optionB||answer.rows.correctAnswer===optionC||answer.rows.correctAnswer===optionD){
+    score++;
+  }
+  console.log(score);
+})
 }
-
 
 
 app.post('/quiz', handleQuiz);
