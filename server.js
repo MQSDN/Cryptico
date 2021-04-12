@@ -33,8 +33,9 @@ app.get("/logout", (req, res) => {
     res.render("index", { message: "You have logged out successfully" });
 });
 
-// ---------------------------------
-
+app.get('/scores', (req, res) => {
+    res.render('scores');
+});
 
 app.get('/register', (req, res) => {
     res.render('register')
@@ -137,12 +138,6 @@ app.post('/quiz', handleQuiz);
 
 function handleQuiz(req, res) {
     const { question, optionA, optionB, optionC, optionD, correctAnswer } = req.body
-        //     // let userId = 0;
-        // const safeValuesarray = [question, optionA, optionB, optionC, optionD, correctAnswer];
-        // const sqlQuery2 = `SELECT id from users WHERE email=$1;`
-        // client.query(sqlQuery2, safeValuesarray).then(result => {
-        //     userId = result.rows[0];
-        // })
 
     const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer];
     const sqlQuery = 'INSERT INTO quiz (question, optionA, optionB, optionC, optionD, correctAnswer) Values ($1, $2, $3, $4, $5, $6);'
