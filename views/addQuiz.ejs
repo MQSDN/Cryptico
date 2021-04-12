@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Quiz</title>
+</head>
+<body>
+    <h1>Feel Free To Add Your Own Quiz</h1>
+
+
+
+
+    <form action="/quiz" method="POST">
+        <legend>Add Your Own Quiz</legend>
+        <fieldset>
+            <div> <input type="text" name="question" placeholder="Add Your Question" /> </div>
+            <div> <input type="text" name="optionA" placeholder="First Option" /></div>
+            <div> <input type="text" name="optionB" placeholder="Second Option" /></div>
+            <div> <input type="text" name="optionC" placeholder="Third Option" /></div>
+            <div> <input type="text" name="optionD" placeholder="Fourth Option" /></div>
+            <div> <input type="text" name="correctAnswer" placeholder="Add The Correct Answer" /></div>
+            <div> <input type="submit" name="submit" placeholder="Add your question" /></div>
+        </fieldset>
+    </form>
+
+
+
+    <button id="toRenderQuestions" type="submit"> Show my questions</button>
+
+
+    <form action="/showAllQuestions" id="userQuestions" style="display: none;" method="POST">
+
+        <% results.forEach(fromDB => { %>
+
+            <p>
+                <%= fromDB.question %>
+            </p>
+
+            <input type="radio" value="<%= fromDB.optiona %>" required>
+            <%= fromDB.optiona %>
+                </input>
+
+                <br />
+
+                <input type="radio" value="<%= fromDB.optionb %>" required>
+                <%= fromDB.optionb %>
+                    </input>
+
+                    <br />
+
+                    <input type="radio" value="<%= fromDB.optionc %> " required>
+                    <%= fromDB.optionc %>
+                        </input>
+
+                        <br />
+
+                        <input type="radio" value="<%= fromDB.optiond %>" required>
+
+                        <%= fromDB.optiond %>
+
+                            </input>
+
+                            <hr />
+
+                            <% }); %>
+
+                                <input type="submit" value="submit"> </input>
+
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script>
+    function handleButton(req, res) {
+        $('#toRenderQuestions').on('click', function (event) {
+            $("#userQuestions").css('display', 'block');
+        });
+    }
+    handleButton();    
+
+</script>
+    
+</body>
+</html>
+    

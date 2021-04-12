@@ -14,6 +14,8 @@ const client = new pg.Client({
     connectionString: DATABASE_URL,
 });
 
+app.use(methodOverride('_method'));
+
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public/styles"));
@@ -88,6 +90,10 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 
+app.get('/addQuiz', (req, res) => {
+    res.render('addQuiz',{results:[]});
+});
+
 app.post('/login', handleLogin);
 
 async function handleLogin(req, res) {
@@ -132,7 +138,7 @@ function handleQuiz(req, res) {
     const getAllQuestions = 'SELECT * FROM quiz;'
     client.query(getAllQuestions).then(result => {
         if (result) {
-            res.render('profile', { results: result.rows });
+            res.render('addQuiz', { results: result.rows });
         }
     });
 
