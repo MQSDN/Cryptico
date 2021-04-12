@@ -25,8 +25,8 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.put('/views/update/:quiz_id', updateQuiz);
-app.delete('/views/delete/:quiz_id', deleteQuiz);
+app.put('/profile/:user_id', updateQuiz);
+app.delete('/profile/:user_id', deleteQuiz);
 
 // ---------------------------------
 app.get("/logout", (req, res) => {
@@ -98,6 +98,7 @@ app.get('/login', (req, res) => {
 app.get('/addQuiz', (req, res) => {
     res.render('addQuiz', { results: [] });
 });
+
 app.get('/profile', (req, res) => {
     res.render('profile', { results: [] });
 });
@@ -107,7 +108,7 @@ app.post('/login', handleLogin);
 async function handleLogin(req, res) {
     try {
         const email = req.body.email;
-        const password = req.body.password;
+        const password = req.body.pass;
         const safe = [email]
         const getDataBaseQuery = 'SELECT * FROM users WHERE email=$1;';
         await client.query(getDataBaseQuery, safe).then(async(results) => {
@@ -137,12 +138,7 @@ app.post('/quiz', handleQuiz);
 
 function handleQuiz(req, res) {
     const { question, optionA, optionB, optionC, optionD, correctAnswer } = req.body
-    let userId = 0;
-    let safeValuesarray = [email];
-    const sqlQuery2 = `SELECT id from users WHERE email=$1;`
-    client.query(sqlQuery2, safeValuesarray).then(result => {
-        userId = result.rows[0];
-    })
+
     const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer];
     const sqlQuery = 'INSERT INTO quiz (question, optionA, optionB, optionC, optionD, correctAnswer) Values ($1, $2, $3, $4, $5, $6);'
 
@@ -151,12 +147,13 @@ function handleQuiz(req, res) {
     const getAllQuestions = 'SELECT * FROM quiz;'
     client.query(getAllQuestions).then(result => {
         if (result) {
-            res.render('addQuiz', { results: result.rows });
+            res.render('profile', { results: result.rows });
         }
     });
 
 }
 
+// ----------------------------------------------------------------
 app.post('/showAllQuestions', handleUserQuestions);
 
 function handleUserQuestions(req, res) {
@@ -223,31 +220,32 @@ function Question(question) {
 
 function updateQuiz(req, res) {
 
-    const quizId = req.params.quiz_id;
+    const quizId = req.params.user_id;
     const { question, optionA, optionB, optionC, optionD, correctAnswer } = req.body
 
-    const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer, quizId];
+    const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer];
 
-    const updateQuery = 'UPDATE quiz SET question=$1, optionA=$2, optionB=$3, optionC=$4, optionD=$5,correctAnswer=$6';
+    const updateQuery = 'UPDATE quiz SET question=$1, optionA=$2, optionB=$3, optionC=$4, optionD=$5,correctAnswer=$6;';
 
     client.query(updateQuery, safeValues).then(results => {
-        res.redirect(`/profile`);
-    })
+        res.render(`/profile`, { results: results.rows });
+    });
 }
 
 
 function deleteQuiz(req, res) {
 
-    let safeValues = req.params.quiz_id;
+    const id = req.params.user_id;
+    let safeValues = [id];
 
-    let deleteQuery = `DELETE  FROM quiz ;`;
-
-
-
-    client.query(deleteQuery).then(() => {
-
+    let deleteQuery = `DELETE FROM quiz WHERE user_id=$1;`;
+    client.query(deleteQuery, safeValues).then(() => {
         res.redirect('/');
-    })
+
+    }).catch(error => {
+        console.error('ERROR', error);
+        res.status(404).send('Sorry , Something went wrong');
+    });
 }
 
 
