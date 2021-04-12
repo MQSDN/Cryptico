@@ -14,7 +14,9 @@ const client = new pg.Client({
     connectionString: DATABASE_URL,
 });
 
+const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
+
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
@@ -23,6 +25,8 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+app.put('/views/update/:quiz_id', updateQuiz);
+app.delete('/views/delete/:quiz_id', deleteQuiz);
 
 // ---------------------------------
 app.get("/logout", (req, res) => {
@@ -38,14 +42,14 @@ app.get('/register', (req, res) => {
 
 app.post('/register', handelRegister);
 
-
+let email = '';
 async function handelRegister(request, res) {
 
     try {
-        const email = request.body.email;
+        email = request.body.email;
         const password = request.body.pass;
-
         const name = request.body.name;
+
         const password2 = request.body.pass2;
         const date = request.body.date;
         let errors = [];
@@ -91,7 +95,10 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/addQuiz', (req, res) => {
-    res.render('addQuiz',{results:[]});
+    res.render('addQuiz', { results: [] });
+});
+app.get('/profile', (req, res) => {
+    res.render('profile', { results: [] });
 });
 
 app.post('/login', handleLogin);
@@ -102,7 +109,7 @@ async function handleLogin(req, res) {
         const password = req.body.password;
         const safe = [email]
         const getDataBaseQuery = 'SELECT * FROM users WHERE email=$1;';
-        await client.query(getDataBaseQuery, safe).then(async(results) => {
+        await client.query(getDataBaseQuery, safe).then(async (results) => {
 
             if (results) {
                 const validation = await bcrypt.compare(password, results.rows[0].pass)
@@ -129,7 +136,12 @@ app.post('/quiz', handleQuiz);
 
 function handleQuiz(req, res) {
     const { question, optionA, optionB, optionC, optionD, correctAnswer } = req.body
-
+    let userId = 0;
+    let safeValuesarray = [email];
+    const sqlQuery2 = `SELECT id from users WHERE email=$1;`
+    client.query(sqlQuery2,safeValuesarray).then(result => {
+        userId = result.rows[0];
+    })
     const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer];
     const sqlQuery = 'INSERT INTO quiz (question, optionA, optionB, optionC, optionD, correctAnswer) Values ($1, $2, $3, $4, $5, $6);'
 
@@ -149,11 +161,11 @@ app.post('/showAllQuestions', handleUserQuestions);
 function handleUserQuestions(req, res) {
     const { value } = req.body;
     const correctAnswer = 'SELECT * FROM quiz;'
+
     let score = 0;
-    client.query(correctAnswer).then(answer => {
-        if (answer.rows.correctAnswer === value) {
-            score++;
-        }
+    client.query(correctAnswer).then(result => {
+        res.render('profile', { results: result.rows })
+
         console.log(score);
     })
 }
@@ -191,19 +203,52 @@ function decodeHtml(str) {
         '&#039;': "'",
         '&pi;': 'PI'
     };
-    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m) { return map[m]; });
+    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function (m) { return map[m]; });
 }
 
 
 function Question(question) {
     this.questionText = decodeHtml(question.question);
     this.choices = [decodeHtml(question.incorrect_answers[0]),
-        decodeHtml(question.incorrect_answers[1]),
-        decodeHtml(question.incorrect_answers[2]),
-        decodeHtml(question.correct_answer)
+    decodeHtml(question.incorrect_answers[1]),
+    decodeHtml(question.incorrect_answers[2]),
+    decodeHtml(question.correct_answer)
     ];
     this.correct_answer = decodeHtml(question.correct_answer);
 }
+
+
+
+
+function updateQuiz(req, res) {
+
+    const quizId = req.params.quiz_id;
+    const { question, optionA, optionB, optionC, optionD, correctAnswer } = req.body
+
+    const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer, quizId];
+
+    const updateQuery = 'UPDATE quiz SET question=$1, optionA=$2, optionB=$3, optionC=$4, optionD=$5,correctAnswer=$6';
+
+    client.query(updateQuery, safeValues).then(results => {
+        res.redirect(`/profile`);
+    })
+}
+
+
+function deleteQuiz(req, res) {
+
+    let safeValues = req.params.quiz_id;
+
+    let deleteQuery = `DELETE  FROM quiz ;`;
+
+
+
+    client.query(deleteQuery).then(() => {
+
+        res.redirect('/');
+    })
+}
+
 
 client.connect().then(() =>
     app.listen(PORT, () => console.log(`Listening on port: ${PORT}`))
