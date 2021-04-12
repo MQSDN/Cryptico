@@ -2,18 +2,22 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="background.css">
+
     <link rel="stylesheet" href="login.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <title>Document</title>
 </head>
 
 <body>
 
     <header>
-        <%- include('./layout/nav.ejs') %>
+        <!-- <%- include('./layout/nav.ejs') %> -->
 
 
 
-            <!-- <h2>YOUR DATA ARE NOW IN THE DB, TRY TO Login</h2> -->
+        <!-- <h2>YOUR DATA ARE NOW IN THE DB, TRY TO Login</h2> -->
     </header>
 
     <main>
@@ -27,6 +31,19 @@
                 <input type="submit" value="submit"> </input>
             </fieldset>
         </form> -->
+
+
+
+        <div class='light x1'></div>
+        <div class='light x2'></div>
+        <div class='light x3'></div>
+        <div class='light x4'></div>
+        <div class='light x5'></div>
+        <div class='light x6'></div>
+        <div class='light x7'></div>
+        <div class='light x8'></div>
+        <div class='light x9'></div>
+
 
 
 
@@ -44,11 +61,15 @@
                     <label for="psw"><b>Password</b></label>
                     <input type="password" placeholder="Enter Password" name="psw" required>
 
-                    <button type="submit">Login</button>
+                    <button id="logBtn" type="submit">Login</button>
+
                     <label>
                     </label>
                     <br>
                     <input type="checkbox" checked="checked" name="remember"> Remember me
+
+                    <p id="backBtn"> <a href="/">Home</a>.</p>
+                    <a class="registering" href="/register">Create an account?</a>
                 </div>
 
                 <div class="container" style="background-color:#f1f1f1">
@@ -57,7 +78,7 @@
         </div>
 
     </main>
-    <script>
+    <!-- <script>
         // Get the modal
         var modal = document.getElementById('id01');
 
@@ -67,7 +88,7 @@
                 modal.style.display = "none";
             }
         }
-    </script>
+    </script> -->
 </body>
 
 </html>
