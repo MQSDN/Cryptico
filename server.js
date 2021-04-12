@@ -25,6 +25,10 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 
+app.get('/scores', (req, res) => {
+    res.render('scores');
+});
+
 app.get('/register', (req, res) => {
     res.render('register')
 });
