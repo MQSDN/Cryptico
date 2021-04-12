@@ -13,25 +13,11 @@
 <body>
 
     <header>
-        <!-- <%- include('./layout/nav.ejs') %> -->
-
-
-
-        <!-- <h2>YOUR DATA ARE NOW IN THE DB, TRY TO Login</h2> -->
+      
     </header>
 
     <main>
-        <!-- <form action="/login" method="POST">
-            <fieldset>
-                Your Email
-                <input type="email" name="email"> </input>
-                Your Pass
-                <input type="password" name="password"> </input>
-
-                <input type="submit" value="submit"> </input>
-            </fieldset>
-        </form> -->
-
+       
 
 
         <div class='light x1'></div>
@@ -55,13 +41,13 @@
                 </div>
 
                 <div class="container">
-                    <label for="uname"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="uname" required>
+                    <label for="uname"><b>Email</b></label>
+                    <input type="text" placeholder="Enter Username" name="email" required>
 
                     <label for="psw"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="psw" required>
+                    <input type="password" placeholder="Enter Password" name="pass" required>
 
-                    <button id="logBtn" type="submit">Login</button>
+                    <input id="logBtn" type="submit">Login</input>
 
                     <label>
                     </label>
@@ -78,17 +64,7 @@
         </div>
 
     </main>
-    <!-- <script>
-        // Get the modal
-        var modal = document.getElementById('id01');
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script> -->
+    
 </body>
 
 </html>

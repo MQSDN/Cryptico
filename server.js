@@ -107,7 +107,7 @@ app.post('/login', handleLogin);
 async function handleLogin(req, res) {
     try {
         const email = req.body.email;
-        const password = req.body.password;
+        const password = req.body.pass;
         const safe = [email]
         const getDataBaseQuery = 'SELECT * FROM users WHERE email=$1;';
         await client.query(getDataBaseQuery, safe).then(async(results) => {
