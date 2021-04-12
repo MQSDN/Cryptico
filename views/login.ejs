@@ -2,17 +2,26 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="background.css">
+
+    <link rel="stylesheet" href="login.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <title>Document</title>
 </head>
 
 <body>
 
     <header>
-        <h2>YOUR DATA ARE NOW IN THE DB, TRY TO Login</h2>
+        <!-- <%- include('./layout/nav.ejs') %> -->
+
+
+
+        <!-- <h2>YOUR DATA ARE NOW IN THE DB, TRY TO Login</h2> -->
     </header>
 
     <main>
-        <form action="/login" method="POST">
+        <!-- <form action="/login" method="POST">
             <fieldset>
                 Your Email
                 <input type="email" name="email"> </input>
@@ -21,9 +30,65 @@
 
                 <input type="submit" value="submit"> </input>
             </fieldset>
-        </form>
-    </main>
+        </form> -->
 
+
+
+        <div class='light x1'></div>
+        <div class='light x2'></div>
+        <div class='light x3'></div>
+        <div class='light x4'></div>
+        <div class='light x5'></div>
+        <div class='light x6'></div>
+        <div class='light x7'></div>
+        <div class='light x8'></div>
+        <div class='light x9'></div>
+
+
+
+
+        <div id="id01" class="modal">
+
+            <form class="modal-content animate" action="/login" method="post">
+                <div class="imgcontainer">
+                    <img src="https://www.hrzone.com/sites/all/themes/pp/img/default-user.png" alt="Avatar" class="avatar">
+                </div>
+
+                <div class="container">
+                    <label for="uname"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="uname" required>
+
+                    <label for="psw"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="psw" required>
+
+                    <button id="logBtn" type="submit">Login</button>
+
+                    <label>
+                    </label>
+                    <br>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+
+                    <p id="backBtn"> <a href="/">Home</a>.</p>
+                    <a class="registering" href="/register">Create an account?</a>
+                </div>
+
+                <div class="container" style="background-color:#f1f1f1">
+                </div>
+            </form>
+        </div>
+
+    </main>
+    <!-- <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script> -->
 </body>
 
 </html>

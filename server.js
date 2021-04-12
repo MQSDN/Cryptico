@@ -33,8 +33,9 @@ app.get("/logout", (req, res) => {
     res.render("index", { message: "You have logged out successfully" });
 });
 
-// ---------------------------------
-
+app.get('/scores', (req, res) => {
+    res.render('scores');
+});
 
 app.get('/register', (req, res) => {
     res.render('register')
@@ -109,7 +110,7 @@ async function handleLogin(req, res) {
         const password = req.body.password;
         const safe = [email]
         const getDataBaseQuery = 'SELECT * FROM users WHERE email=$1;';
-        await client.query(getDataBaseQuery, safe).then(async (results) => {
+        await client.query(getDataBaseQuery, safe).then(async(results) => {
 
             if (results) {
                 const validation = await bcrypt.compare(password, results.rows[0].pass)
@@ -139,7 +140,7 @@ function handleQuiz(req, res) {
     let userId = 0;
     let safeValuesarray = [email];
     const sqlQuery2 = `SELECT id from users WHERE email=$1;`
-    client.query(sqlQuery2,safeValuesarray).then(result => {
+    client.query(sqlQuery2, safeValuesarray).then(result => {
         userId = result.rows[0];
     })
     const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer];
@@ -203,16 +204,16 @@ function decodeHtml(str) {
         '&#039;': "'",
         '&pi;': 'PI'
     };
-    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function (m) { return map[m]; });
+    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m) { return map[m]; });
 }
 
 
 function Question(question) {
     this.questionText = decodeHtml(question.question);
     this.choices = [decodeHtml(question.incorrect_answers[0]),
-    decodeHtml(question.incorrect_answers[1]),
-    decodeHtml(question.incorrect_answers[2]),
-    decodeHtml(question.correct_answer)
+        decodeHtml(question.incorrect_answers[1]),
+        decodeHtml(question.incorrect_answers[2]),
+        decodeHtml(question.correct_answer)
     ];
     this.correct_answer = decodeHtml(question.correct_answer);
 }
