@@ -12,4 +12,4 @@ Create table   userProfile (userResult Numeric);
 
 
 Drop table if exists quiz;
-Create table quiz  (user_id int ,question text, optionA text, optionB text, optionC text, optionD text, correctAnswer text  );
+Create table quiz (user_id INT, question text, optionA text, optionB text, optionC text, optionD text, correctAnswer text, user_email VARCHAR(200));
