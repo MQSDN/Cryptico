@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Quiz</title>
 </head>
+
 <body>
     <h1>Feel Free To Add Your Own Quiz</h1>
-<h4><a href="/profile">Profile Page</a></h4>
+    <h4><a href="/profile">Profile Page</a></h4>
 
 
 
-    <form action="/quiz" method="POST">
+    <form action="/add" method="POST">
         <legend>Add Your Own Quiz</legend>
         <fieldset>
             <div> <input type="text" name="question" placeholder="Add Your Question" /> </div>
@@ -21,6 +23,7 @@
             <div> <input type="text" name="optionC" placeholder="Third Option" /></div>
             <div> <input type="text" name="optionD" placeholder="Fourth Option" /></div>
             <div> <input type="text" name="correctAnswer" placeholder="Add The Correct Answer" /></div>
+            <div> <input type="email" name="email" id="email" placeholder="Enter your email to confirm"></div>
             <div> <input type="submit" name="submit" placeholder="Add your question" /></div>
         </fieldset>
     </form>
@@ -28,5 +31,5 @@
 
 
 </body>
+
 </html>
-    

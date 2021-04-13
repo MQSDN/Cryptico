@@ -18,19 +18,55 @@
     <h4>Hello </h4>
 
 
-   
+
 
     <button id="toRenderQuestions" type="submit"> Show My Quizzes</button>
+    <button id="hideQuestions" style="display: none;" type="submit">Hide My Quizzes</button>
 
-
-    <form action="/showAllQuestions" id="userQuestions" style="display: none;" method="POST">
-
+    <section id="userQuestions" style="display: none;">
         <% results.forEach(fromDB=> { %>
 
-            <%console.log(fromDB)%>
-                <p>
+            <div class="myQuestion">
+
+                <section id="deleteSection">
+                    <form class="updateForm" action="delete/<%= fromDB.id %>?_method=DELETE" method="POST">
+                        <input type="submit" value="Delete"></input>
+                    </form>
+                </section>
+                <button id="toEdit" type="submit">Edit</button>
+                <section id="updateSection" style="display: none;">
+
+                    <form class="updateForm" action="update/<%= fromDB.id %>?_method=PUT" method="POST">
+                        <fieldset>
+                            <legend>Update Quiz</legend>
+                            <input type="hidden" value="<%= fromDB.id %>">
+                            <label for="quistion">Question</label>
+
+                            <input type="text" name="question" value="<%= fromDB.question %>"><br>
+                            <label for="optionA">First Option</label>
+                            <input type="text" name="optionA" value="<%= fromDB.optiona %>"><br>
+
+                            <label for="optionB">Second Option</label>
+                            <input type="text" name="optionB" value="<%= fromDB.optionb %>"><br>
+                            <label for="optionC">Third Option</label>
+                            <input type="text" name="optionC" value=<%=fromDB.optionc %>><br>
+                            <label for="optionD">Fourth Option</label>
+
+                            <input type="text" name="optionD" value="<%= fromDB.optiond %>"><br>
+                            <label for="correctAnswer">Correct Answer</label>
+
+
+                            <input type="text" name="correctAnswer" value="<%= fromDB.correctAnswer %>">
+                            <br>
+                            <input type="submit" value="Submit">
+                            </input>
+                        </fieldset>
+                    </form>
+                </section>
+
+                <h2>
                     <%= fromDB.question %>
-                </p>
+                </h2>
 
                 <input type="radio" value="<%= fromDB.optiona %>" required>
                 <%= fromDB.optiona %>
@@ -57,27 +93,37 @@
                                 </input>
 
                                 <hr />
+            </div>
+            <% }); %>
 
 
-                                <input type="submit" value="submit"> </input>
+    </section>
 
-    </form>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-    </script>
+    <section id="editDetails"></section>
+
+
     <script>
-        function handleButton(req, res) {
-            $('#toRenderQuestions').on('click', function(event) {
-                $("#userQuestions").css('display', 'block');
-            });
-            console.log('kaaaaaaaaaa')
-        }
-        handleButton();
+        let render = document.getElementById("toRenderQuestions");
+        let hide = document.getElementById('hideQuestions');
+        let section = document.getElementById('userQuestions');
+        let edit = document.getElementById('toEdit');
+        let update = document.getElementById('updateSection');
+        render.addEventListener('click', (event) => {
+            section.style.display = 'block';
+            hide.style.display = 'block';
+            render.style.display = "none";
+        });
+        hide.addEventListener('click', event => {
+            section.style.display = 'none';
+            hide.style.display = 'none';
+            render.style.display = "block";
+        });
+        edit.addEventListener('click', event => {
+            update.style.display = 'block';
+        });
     </script>
 
-
-
-    <button onclick="handle(this)">Update Quizzes</button>
     <script>
         function handle(element) {
             const formElement = document.getElementsByClassName('updateForm');
@@ -86,50 +132,6 @@
             element.style.display = "none";
         }
     </script>
-
-    <section id="editDetails"></section>
-
-    <form class="updateForm" action="profile/<%= fromDB.id %>?_method=DELETE" method="POST" style='display: none;'>
-        <input type="hidden" value="<%= fromDB.id %>">
-
-        <input type="submit" value="Delete Quiz">
-    </form>
-
-
-    <section>
-
-        <form class="updateForm" action="profile/<%= fromDB.user_id %>?_method=PUT" method="POST" style='display: none;'>
-            <fieldset>
-                <% console.log(fromDB.user_id) %>
-                    <legend>Update Quiz</legend>
-                    <input type="hidden" value="<%= fromDB.id %>">
-                    <label for="quistion">Question</label>
-
-                    <input type="text" name="question" value="<%= fromDB.question %>"><br>
-                    <label for="optionA">First Option</label>
-                    <input type="text" name="optionA" value="<%= fromDB.optiona %>"><br>
-
-                    <label for="optionB">Second Option</label>
-                    <input type="text" name="optionB" value="<%= fromDB.optionb %>"><br>
-                    <label for="optionC">Third Option</label>
-                    <input type="text" name="optionC" value=<%=fromDB.optionc %>><br>
-                    <label for="optionD">Fourth Option</label>
-
-                    <input type="text" name="optionD" value="<%= fromDB.optiond %>"><br>
-                    <label for="correctAnswer">Correct Answer</label>
-
-
-                    <input type="text" name="correctAnswer" value="<%= fromDB.correctAnswer %>">
-                    <br>
-                    <input type="submit" value="Update Quiz">
-            </fieldset>
-        </form>
-    </section>
-    <% }); %>
-
-
-
-
 
 </body>
 
