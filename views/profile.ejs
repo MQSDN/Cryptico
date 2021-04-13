@@ -98,9 +98,9 @@
 
     <section>
 
-        <form class="updateForm" action="profile/<%= fromDB.user_id %>?_method=PUT" method="POST" style='display: none;'>
+        <form class="updateForm" action="profile/<%= fromDB.id %>?_method=PUT" method="POST" style='display: none;'>
             <fieldset>
-                <% console.log(fromDB.user_id) %>
+                <% console.log(fromDB.id) %>
 
                     <legend>Update Quiz</legend>
                     <input type="hidden" value="<%= fromDB.id %>">

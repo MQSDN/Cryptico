@@ -193,33 +193,72 @@ function handleUserQuestions(req, res) {
 }
 
 
-////////////////////////////////////////////////////////////// Quizzes Part
+//////////////////////////////////////// Quizzes Part//////////////////////////////////////////////////////////////////////////////////////////
+app.get('/start', (req, res) => {
+    res.render('quiz', { questions: [] })
+})
+
 app.post('/start', startQuiz);
 
-function startQuiz(req, res) {
+let score = 0;
+let array;
 
+function startQuiz(req, res) {
     const queryObject = {
         category: req.body.category,
         difficulty: req.body.level
     }
-    console.log(queryObject);
+
     const url = `https://opentdb.com/api.php?amount=10&category=${queryObject.category}&difficulty=${queryObject.difficulty}&type=multiple`;
-    console.log(url);
+
     superagent.get(url).then(resData => {
-        if (resData.body.response_code === 0) {
-            let questions = resData.body.results.map(question => {
-                return new Question(question);
-            });
-            res.send(questions);
-            //res.render('../views/quiz', { questions: questions });
-        } else {
-            throw new Error('No questions Provided');
-        }
+
+        res.render('quiz', { questions: resData.body.results });
+
+
+        app.post('/submit', (req, res) => {
+
+            let correct = req.body.correctAnswer;
+
+            array = resData.body.results.map(obj => {
+                return obj.question;
+            })
+
+            // let first = array[0]
+
+            // console.log(first);
+
+            if (correct.includes(req.body.array[0])) {
+                score++
+            }
+            // } else if (correct.includes(req.body.array[1].toString())) {
+            //     score++
+            // } else if (correct.includes(req.body.array[2].toString())) {
+            //     score++
+            // } else if (correct.includes(req.body.array[3].toString())) {
+            //     score++
+            // } else if (correct.includes(req.body.array[4].toString())) {
+            //     score++
+            // } else if (correct.includes(req.body.array[5].toString())) {
+            //     score++
+            // } else if (correct.includes(req.body.array[6].toString())) {
+            //     score++
+            // } else if (correct.includes(req.body.array[7].toString())) {
+            //     score++
+            // } else if (correct.includes(req.body.array[8].toString())) {
+            //     score++
+            // } else if (correct.includes(req.body.array[9].toString())) {
+            //     score++
+            // }
+
+            console.log(score);
+        });
 
     }).catch(error => {
         errorHandler(error, res);
     });
 }
+
 
 function decodeHtml(str) {
     var map = {
@@ -234,16 +273,6 @@ function decodeHtml(str) {
     return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;|&pi;|&deg;/g, function(m) { return map[m]; });
 }
 
-
-function Question(question) {
-    this.questionText = question.question ? decodeHtml(question.question) : 'No Questions Provided';
-    this.choices = [decodeHtml(question.incorrect_answers[0]),
-        decodeHtml(question.incorrect_answers[1]),
-        decodeHtml(question.incorrect_answers[2]),
-        decodeHtml(question.correct_answer)
-    ];
-    this.correct_answer = decodeHtml(question.correct_answer);
-}
 
 function errorHandler(error, res) {
     res.render('error', { error: error });
