@@ -29,14 +29,14 @@
             <div class="myQuestion">
 
                 <section id="deleteSection">
-                    <form class="updateForm" action="delete/<%= fromDB.id %>?_method=DELETE" method="POST">
+                    <form class="updateForm" action="/delete/<%= fromDB.id %>?_method=DELETE" method="POST">
                         <input type="submit" value="Delete"></input>
                     </form>
                 </section>
                 <button id="toEdit" type="submit">Edit</button>
                 <section id="updateSection" style="display: none;">
 
-                    <form class="updateForm" action="update/<%= fromDB.id %>?_method=PUT" method="POST">
+                    <form class="updateForm" action="/update/<%= fromDB.id %>?_method=PUT" method="POST">
                         <fieldset>
                             <legend>Update Quiz</legend>
                             <input type="hidden" value="<%= fromDB.id %>">
