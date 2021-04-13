@@ -1,5 +1,4 @@
 body {
-    background-color: rgba(240, 220, 194, 0.575);
     margin: 0;
 }
 
@@ -461,10 +460,35 @@ input[type="radio"]:checked+label.btn::after {
     }
 }
 
-
-/* #options {
-    margin-right: auto;
-    display: inline-grid;
-    margin-left: 700px;
+#profileHead {
+    display: block;
+    /* margin-left: 665px;
     margin-top: 150px;
-} */
+    display: block; */
+    margin-left: 500px;
+    margin-top: 150px;
+    width: 50%;
+}
+
+.to {
+    background-color: #656665;
+    color: white;
+    padding: 14px 20px;
+    /* margin: 8px 0; */
+    border: none;
+    cursor: pointer;
+    width: 70%;
+    margin-left: -359;
+    /* margin-right: auto; */
+    display: block;
+    height: 60px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.to:hover {
+    opacity: 0.8;
+}
