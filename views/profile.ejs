@@ -4,94 +4,103 @@
 <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- <link rel="stylesheet" href="background.css"> -->
+    <!-- <link rel="stylesheet" href="login.css"> -->
+    <link rel="stylesheet" href="nav.css">
+
+
     <title>profile</title>
 </head>
 
 <body>
-    <h1>Profile</h1>
-    <a href="/addQuiz">Add Quiz</a> <br>
+    <header id="home">
+        <%- include('./layout/nav.ejs') %>
 
-    <a href="/logout">Logout</a>
+            <h1>Profile</h1>
+            <div id="profileHead" style="transform: translate(0px,-40px);">
+                <button class="to" id="toRenderQuestions" type="submit"> Show My Quizzes</button>
+                <button class="to" id="hideQuestions" style="display: none;" type="submit">Hide My Quizzes</button>
+                <a class="to" href="/addQuiz" style="margin-top: 20px;">Add Quiz</a> <br>
+                <a class="to" href="/logout">Logout</a>
+            </div>
 
-    <h4>Hello </h4>
+    </header>
+
+    <div class='light x1'></div>
+    <div class='light x2'></div>
+    <div class='light x3'></div>
+    <div class='light x4'></div>
+    <div class='light x5'></div>
+    <div class='light x6'></div>
+    <div class='light x7'></div>
+    <div class='light x8'></div>
+    <div class='light x9'></div>
 
 
 
 
-    <button id="toRenderQuestions" type="submit"> Show My Quizzes</button>
-    <button id="hideQuestions" style="display: none;" type="submit">Hide My Quizzes</button>
+
+
+
+
+
+    
 
     <section id="userQuestions" style="display: none;">
         <% results.forEach(fromDB=> { %>
-
             <div class="myQuestion">
-
                 <section id="deleteSection">
-                    <form class="updateForm" action="/delete/<%= fromDB.id %>?_method=DELETE" method="POST">
+                    <form class="updateForm" action="delete/<%= fromDB.id %>?_method=DELETE" method="POST">
                         <input type="submit" value="Delete"></input>
                     </form>
                 </section>
                 <button id="toEdit" type="submit">Edit</button>
                 <section id="updateSection" style="display: none;">
-
-                    <form class="updateForm" action="/update/<%= fromDB.id %>?_method=PUT" method="POST">
+                    <div id="id01" class="modal">
+                    <form class="updateForm" id="formZ" action="update/<%= fromDB.id %>?_method=PUT" method="POST">
                         <fieldset>
                             <legend>Update Quiz</legend>
                             <input type="hidden" value="<%= fromDB.id %>">
                             <label for="quistion">Question</label>
-
                             <input type="text" name="question" value="<%= fromDB.question %>"><br>
                             <label for="optionA">First Option</label>
                             <input type="text" name="optionA" value="<%= fromDB.optiona %>"><br>
-
                             <label for="optionB">Second Option</label>
                             <input type="text" name="optionB" value="<%= fromDB.optionb %>"><br>
                             <label for="optionC">Third Option</label>
                             <input type="text" name="optionC" value=<%=fromDB.optionc %>><br>
                             <label for="optionD">Fourth Option</label>
-
                             <input type="text" name="optionD" value="<%= fromDB.optiond %>"><br>
                             <label for="correctAnswer">Correct Answer</label>
-
-
                             <input type="text" name="correctAnswer" value="<%= fromDB.correctAnswer %>">
                             <br>
                             <input type="submit" value="Submit">
                             </input>
                         </fieldset>
                     </form>
+                </div>
                 </section>
-
                 <h2>
                     <%= fromDB.question %>
                 </h2>
-
                 <input type="radio" value="<%= fromDB.optiona %>" required>
                 <%= fromDB.optiona %>
                     </input>
-
                     <br />
-
                     <input type="radio" value="<%= fromDB.optionb %>" required>
                     <%= fromDB.optionb %>
                         </input>
-
                         <br />
-
                         <input type="radio" value="<%= fromDB.optionc %> " required>
                         <%= fromDB.optionc %>
                             </input>
-
                             <br />
-
                             <input type="radio" value="<%= fromDB.optiond %>" required>
-
                             <%= fromDB.optiond %>
-
                                 </input>
-
                                 <hr />
             </div>
             <% }); %>
@@ -100,21 +109,7 @@
     </section>
 
 
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-    </script>
-    <script>
-        function handleButton(req, res) {
-            $('#toRenderQuestions').on('click', function(event) {
-                $("#userQuestions").css('display', 'block');
-            });
-
-        }
-        handleButton();
-    </script>
-
     <section id="editDetails"></section>
-
 
 
     <script>
@@ -146,51 +141,6 @@
             element.style.display = "none";
         }
     </script>
-
-
-    <section id="editDetails"></section>
-
-    <form class="updateForm" action="profile/<%= fromDB.id %>?_method=DELETE" method="POST" style='display: none;'>
-        <input type="hidden" value="<%= fromDB.id %>">
-
-        <input type="submit" value="Delete Quiz">
-    </form>
-
-
-    <section>
-
-        <form class="updateForm" action="profile/<%= fromDB.id %>?_method=PUT" method="POST" style='display: none;'>
-            <fieldset>
-                <% console.log(fromDB.id) %>
-
-                    <legend>Update Quiz</legend>
-                    <input type="hidden" value="<%= fromDB.id %>">
-
-                    <label for="quistion">Question</label>
-                    <input type="text" name="question" value="<%= fromDB.question %>"><br>
-
-                    <label for="optionA">First Option</label>
-                    <input type="text" name="optionA" value="<%= fromDB.optiona %>"><br>
-
-                    <label for="optionB">Second Option</label>
-                    <input type="text" name="optionB" value="<%= fromDB.optionb %>"><br>
-
-                    <label for="optionC">Third Option</label>
-                    <input type="text" name="optionC" value=<%=fromDB.optionc %>><br>
-
-                    <label for="optionD">Fourth Option</label>
-                    <input type="text" name="optionD" value="<%= fromDB.optiond %>"><br>
-
-                    <label for="correctAnswer">Correct Answer</label>
-                    <input type="text" name="correctAnswer" value="<%= fromDB.correctAnswer %>">
-                    <br>
-
-                    <input type="submit" value="Update Quiz">
-            </fieldset>
-        </form>
-    </section>
-    <% }); %>
-
 
 </body>
 

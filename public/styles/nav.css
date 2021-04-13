@@ -17,6 +17,7 @@ body {
 }
 
 .sidenav a {
+    margin-left: 10px;
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
@@ -457,4 +458,56 @@ input[type="radio"]:checked+label.btn::after {
     .btn:nth-of-type(4) {
         left: 91%;
     }
+}
+
+#profileHead {
+    display: block;
+    /* margin-left: 665px;
+    margin-top: 150px;
+    display: block; */
+    margin-left: 500px;
+    margin-top: 150px;
+    width: 50%;
+}
+
+.to {
+    background-color: #656665;
+    color: white;
+    padding: 14px 20px;
+    /* margin: 8px 0; */
+    border: none;
+    cursor: pointer;
+    width: 70%;
+    margin-left: -359;
+    /* margin-right: auto; */
+    display: block;
+    height: 60px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.to:hover {
+    opacity: 0.8;
+}
+.updateForm{
+    background-color: #656665;
+    color: white;
+    padding: 14px 20px;
+    /* margin: 8px 0; */
+    border: none;
+    cursor: pointer;
+    width: 70%;
+    margin-left: -359;
+    /* margin-right: auto; */
+    display: block;
+    height: 60px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: bold;
+
 }
