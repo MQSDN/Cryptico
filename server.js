@@ -41,6 +41,9 @@ app.get('/register', (req, res) => {
     res.render('register')
 });
 
+app.get('/about-us', (req, res) => {
+    res.render('about-us')
+});
 app.post('/register', handelRegister);
 
 let email = '';
