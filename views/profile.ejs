@@ -6,13 +6,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="background.css">
+    <!-- <link rel="stylesheet" href="background.css"> -->
+    <!-- <link rel="stylesheet" href="login.css"> -->
+    <link rel="stylesheet" href="nav.css">
+
 
     <title>profile</title>
 </head>
 
 <body>
+    <header id="home">
+        <%- include('./layout/nav.ejs') %>
 
+            <h1>Profile</h1>
+            <button class="toRenderQuestions" type="submit"> Show My Quizzes</button>
+            <a class="toRenderQuestions" href="/addQuiz">Add Quiz</a> <br>
+            <a id="out" href="/logout">Logout</a>
+
+
+    </header>
 
     <div class='light x1'></div>
     <div class='light x2'></div>
@@ -25,17 +37,12 @@
     <div class='light x9'></div>
 
 
-    <h1>Profile</h1>
-
-
-    <h4>Hello </h4>
 
 
 
 
-    <button class="toRenderQuestions" type="submit"> Show My Quizzes</button>
-    <a class="toRenderQuestions" href="/addQuiz">Add Quiz</a> <br>
-    <a id="out" href="/logout">Logout</a>
+
+
 
     <form action="/showAllQuestions" id="userQuestions" style="display: none;" method="POST">
 
@@ -45,7 +52,6 @@
                 <p>
                     <%= fromDB.question %>
                 </p>
-
                 <input type="radio" value="<%= fromDB.optiona %>" required>
                 <%= fromDB.optiona %>
                     </input>
@@ -76,6 +82,50 @@
                                 <input type="submit" value="submit"> </input>
 
     </form>
+
+
+
+
+
+
+    <!-- <div id="id01" class="modal">
+
+        <form class="modal-content animate" action="/login" method="post">
+            <div class="imgcontainer">
+                <img src="https://www.hrzone.com/sites/all/themes/pp/img/default-user.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+                <label for="uname"><b>Email</b></label>
+                <input type="text" placeholder="Enter Username" name="email" required>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="pass" required>
+
+                <input id="logBtn" type="submit">Login</input>
+
+                <label>
+                </label>
+                <br>
+                <input type="checkbox" checked="checked" name="remember"> Remember me
+
+                <p id="backBtn"> <a href="/">Home</a>.</p>
+                <a class="registering" href="/register">Create an account?</a>
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+            </div>
+        </form>
+    </div> -->
+
+
+
+
+
+
+
+
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
     </script>
