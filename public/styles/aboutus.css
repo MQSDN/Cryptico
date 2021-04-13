@@ -316,6 +316,8 @@ font-family: 'Raleway', sans-serif;
   color: black;
  
 }
+
+
 .fab:hover{
   color: #fff;
 }
@@ -1183,4 +1185,37 @@ input[type="radio"]:checked+label.btn::after {
   .btn:nth-of-type(4) {
       left: 91%;
   }
+}
+
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0px;
+  height: 30px;
+ 
+}
+
+.button:hover {
+  background-color: #f9f3f3;
+  
+}
+
+a {
+  text-decoration: none;
+  font-size: large;
+  color: coral;
+}
+
+.wrap{
+  width: 100%;
 }

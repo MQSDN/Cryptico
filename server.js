@@ -193,6 +193,10 @@ function handleUserQuestions(req, res) {
 
 
 ////////////////////////////////////////////////////////////// Quizzes Part
+app.get('/start',(req,res)=>{
+    res.render('quiz',{questions:[]});
+})
+
 app.post('/start', startQuiz);
 
 function startQuiz(req, res) {
@@ -201,19 +205,25 @@ function startQuiz(req, res) {
         category: req.body.category,
         difficulty: req.body.level
     }
-    console.log(queryObject);
     const url = `https://opentdb.com/api.php?amount=10&category=${queryObject.category}&difficulty=${queryObject.difficulty}&type=multiple`;
-    console.log(url);
+
     superagent.get(url).then(resData => {
         if (resData.body.response_code === 0) {
             let questions = resData.body.results.map(question => {
                 return new Question(question);
             });
-            res.send(questions);
-            //res.render('../views/quiz', { questions: questions });
+           // res.send(questions);
+            res.render('../views/quiz', { questions: questions });
         } else {
             throw new Error('No questions Provided');
         }
+        let score=0;
+        let answer=req.body.answer;
+        if(answer===question.correctAnswer){
+            score++;
+
+        }
+        res.send(`your score is ${score} out of 10`)
 
     }).catch(error => {
         errorHandler(error, res);
