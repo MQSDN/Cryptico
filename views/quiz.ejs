@@ -14,43 +14,17 @@
 
     </header>
     <main>
-        <form action="/start" method="post">
 
-
-            <input type="radio" name="level" value="easy" required> Easy </input>
-            <input type="radio" name="level" value="medium"> Medium </input>
-            <input type="radio" name="level" value="hard"> Hard </input>
-            <hr />
-            <button type="submit">
-                <div class="category" id="nature">
-                    <input type="hidden" name="category" value="17"> Science & Nature </input>
-                </div>
-            </button>
-
-
-            <!-- <button type="submit">Start</button> -->
-
-        </form>
-
-
-
-        <!-- <div class="category"></div>
-      <div class="category"></div>
-      <div class="category"></div>
-      <div class="category"></div>
-      <div class="category"></div>
-      <div class="category"></div>
-      <div class="category"></div>
-      <div class="category"></div> -->
-        <!-- <fieldset>
+        <form action="/start" method="POST">
+            <fieldset>
                 <select name="category" id="category">
           <option value="choose">choose category ...</option>
-            <!-- <option value="Any">Any</option>
+             <option value="Any">Any</option>
             <optgroup label="Science">
                 <option value="17">Nature</option>
                 <option value="18">Computers</option>
                 <option value="19">Mathemetics</option>
-                = </optgroup>
+                </optgroup>
             <optgroup label="General">
                 <option value="9">General Knowledge</option>
                 <option value="23">History</option>
@@ -72,36 +46,61 @@
             </optgroup>
 
             </select>
-            
-
             </fieldset>
-        </form>-->
+            <fieldset>
+                <legend></legend>
+                <input type="radio" name="level" id="easy" value="easy" required> Easy </input>
+                <input type="radio" name="level" id="medium" value="medium"> Medium </input>
+                <input type="radio" name="level" id="hard" value="hard"> Hard </input>
+            </fieldset>
 
-        <% questions.forEach(question=> {%>
-            <div class="question">
-                <h5>
-                    <%= question.questionText %>
-                </h5>
-                <form action="/check" method="post">
-                    <input type="radio" name="answer" value="<%= question.choices[0] %>">
-                    <%= question.choices[0] %>
-                        </input>
-                        <input type="radio" name="answer" value="<%= question.choices[1] %>">
-                        <%= question.choices[1] %>
+            <input type="submit" value="Start"></input>
+
+        </form>
+
+        <!-- <section>
+            <% questions.forEach(question=> {%>
+                <div class="question" id="">
+                    <h5>
+                        <%= question.questionText %>
+                    </h5>
+                    <form id="check">
+                        <input type="radio" name="answer" value="<%= question.choices[0] %>">
+                        <%= question.choices[0] %>
                             </input>
-                            <input type="radio" name="answer" value="<%= question.choices[2] %>">
-                            <%= question.choices[2] %>
+                            <input type="radio" name="answer" value="<%= question.choices[1] %>">
+                            <%= question.choices[1] %>
                                 </input>
-                                <input type="radio" name="answer" value="<%= question.choices[3] %>">
-                                <%= question.choices[3] %>
+                                <input type="radio" name="answer" value="<%= question.choices[2] %>">
+                                <%= question.choices[2] %>
                                     </input>
-                                    <button type="submit"> check </button>
-                </form>
-            </div>
-            <% }) %>
+                                    <input type="radio" name="answer" value="<%= question.choices[3] %>">
+                                    <%= question.choices[3] %>
+                                        </input>
+                                        <button type="submit"> <img src="Images/right-arrow.png" alt=""> </button>
+                    </form>
+                </div>
+                <% }); %>
+        </section> -->
     </main>
     <footer>
         <a href="/users/logout">Logout</a>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            let difficulty = 'easy',
+                id = '1';
+            $('input').on('change', event => {
+                console.log(event);
+                difficulty = event.target.id;
+            })
+            $('section').on('click', (event) => {
+                id = event.target.id;
+                $.post('/start', {
+                    category: id,
+                    difficulty: difficulty
+                });
+            });
+        </script> -->
     </footer>
 </body>
 

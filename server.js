@@ -14,6 +14,28 @@ const client = new pg.Client({
     connectionString: DATABASE_URL,
 });
 
+
+const categories = [{ id: 9, name: 'General Knowledge' },
+    { id: 18, name: 'Computers' },
+    { id: 13, name: 'Mathemetics' },
+    { id: 23, name: 'History' },
+    { id: 21, name: 'Sports' },
+    { id: 21, name: 'Celebrities' },
+    { id: 21, name: 'Geography' },
+    { id: 28, name: 'Vehicles' },
+    { id: 20, name: 'Mythology' },
+    { id: 17, name: 'Science & Nature' },
+    { id: 10, name: 'Entertainment : Books' },
+    { id: 11, name: 'Entertainment : Film' },
+    { id: 12, name: 'Entertainment : Music' },
+    { id: 14, name: 'Entertainment : Television' },
+    { id: 15, name: 'Entertainment : Video Games' },
+    { id: 16, name: 'Entertainment : Board Games' },
+    { id: 29, name: 'Entertainment : Comics' },
+    { id: 32, name: 'Entertainment : Cartoon & Animation' },
+
+]
+
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 // ----------------------------------------------------------------------------------------------------
@@ -43,7 +65,9 @@ app.get('/register', (req, res) => {
     res.render('register')
 });
 
-
+app.get('/about-us', (req, res) => {
+    res.render('about-us')
+});
 app.post('/register', handelRegister);
 
 let email = '';
@@ -85,8 +109,7 @@ async function handelRegister(request, res) {
 
 
     } catch (error) {
-        console.log(error);
-        res.send("CHECK YOU TERMINAL SOMETHING WENT WRONG");
+        errorHandler(error, res);
     }
 
 }
@@ -128,9 +151,8 @@ async function handleLogin(req, res) {
                 res.send("No such data in the DB");
             };
         });
-
     } catch (error) {
-        console.log(error);
+        errorHandler(error, res)
     };
 };
 
@@ -184,13 +206,18 @@ function startQuiz(req, res) {
     const url = `https://opentdb.com/api.php?amount=10&category=${queryObject.category}&difficulty=${queryObject.difficulty}&type=multiple`;
     console.log(url);
     superagent.get(url).then(resData => {
-        const questions = resData.body.results.map(question => {
-            return new Question(question);
-        });
-        res.render('quiz', { questions: questions })
+        if (resData.body.response_code === 0) {
+            let questions = resData.body.results.map(question => {
+                return new Question(question);
+            });
+            res.send(questions);
+            //res.render('../views/quiz', { questions: questions });
+        } else {
+            throw new Error('No questions Provided');
+        }
+
     }).catch(error => {
-        console.error('ERROR', error);
-        res.status(404).send('Sorry , Something went wrong');
+        errorHandler(error, res);
     });
 }
 
@@ -201,20 +228,25 @@ function decodeHtml(str) {
         '&gt;': '>',
         '&quot;': '"',
         '&#039;': "'",
-        '&pi;': 'PI'
+        '&pi;': 'π',
+        '&deg;': '°'
     };
-    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m) { return map[m]; });
+    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;|&pi;|&deg;/g, function(m) { return map[m]; });
 }
 
 
 function Question(question) {
-    this.questionText = decodeHtml(question.question);
+    this.questionText = question.question ? decodeHtml(question.question) : 'No Questions Provided';
     this.choices = [decodeHtml(question.incorrect_answers[0]),
         decodeHtml(question.incorrect_answers[1]),
         decodeHtml(question.incorrect_answers[2]),
         decodeHtml(question.correct_answer)
     ];
     this.correct_answer = decodeHtml(question.correct_answer);
+}
+
+function errorHandler(error, res) {
+    res.render('error', { error: error });
 }
 
 
