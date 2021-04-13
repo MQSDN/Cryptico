@@ -18,7 +18,7 @@
     <h4>Hello </h4>
 
 
-   
+
 
     <button id="toRenderQuestions" type="submit"> Show My Quizzes</button>
 
@@ -70,7 +70,7 @@
             $('#toRenderQuestions').on('click', function(event) {
                 $("#userQuestions").css('display', 'block');
             });
-            console.log('kaaaaaaaaaa')
+
         }
         handleButton();
     </script>
@@ -101,35 +101,34 @@
         <form class="updateForm" action="profile/<%= fromDB.user_id %>?_method=PUT" method="POST" style='display: none;'>
             <fieldset>
                 <% console.log(fromDB.user_id) %>
+
                     <legend>Update Quiz</legend>
                     <input type="hidden" value="<%= fromDB.id %>">
-                    <label for="quistion">Question</label>
 
+                    <label for="quistion">Question</label>
                     <input type="text" name="question" value="<%= fromDB.question %>"><br>
+
                     <label for="optionA">First Option</label>
                     <input type="text" name="optionA" value="<%= fromDB.optiona %>"><br>
 
                     <label for="optionB">Second Option</label>
                     <input type="text" name="optionB" value="<%= fromDB.optionb %>"><br>
+
                     <label for="optionC">Third Option</label>
                     <input type="text" name="optionC" value=<%=fromDB.optionc %>><br>
+
                     <label for="optionD">Fourth Option</label>
-
                     <input type="text" name="optionD" value="<%= fromDB.optiond %>"><br>
+
                     <label for="correctAnswer">Correct Answer</label>
-
-
                     <input type="text" name="correctAnswer" value="<%= fromDB.correctAnswer %>">
                     <br>
+
                     <input type="submit" value="Update Quiz">
             </fieldset>
         </form>
     </section>
     <% }); %>
-
-
-
-
 
 </body>
 

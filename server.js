@@ -16,6 +16,7 @@ const client = new pg.Client({
 
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
+// ----------------------------------------------------------------------------------------------------
 
 
 app.set('view engine', 'ejs');
@@ -28,7 +29,8 @@ app.get('/', (req, res) => {
 app.put('/profile/:user_id', updateQuiz);
 app.delete('/profile/:user_id', deleteQuiz);
 
-// ---------------------------------
+
+// -----------------------------------------------------------------------------------------------------
 app.get("/logout", (req, res) => {
     res.render("index", { message: "You have logged out successfully" });
 });
@@ -41,6 +43,7 @@ app.get('/register', (req, res) => {
     res.render('register')
 });
 
+
 app.post('/register', handelRegister);
 
 let email = '';
@@ -50,9 +53,9 @@ async function handelRegister(request, res) {
         email = request.body.email;
         const password = request.body.pass;
         const name = request.body.name;
-
         const password2 = request.body.pass2;
         const date = request.body.date;
+
         let errors = [];
         if (!name || !email || !password || !password2 || !date) {
             errors.push({ message: "Please enter all fields" });
@@ -74,9 +77,8 @@ async function handelRegister(request, res) {
 
 
             const safeValues = [name, email, hash, date];
-            const InsetIntoDataBaseQuery = 'INSERT INTO users (name,email, pass , date) VALUES ($1, $2,$3,$4);';
+            const InsetIntoDataBaseQuery = 'INSERT INTO users (name, email, pass , date) VALUES ($1, $2, $3, $4);';
             await client.query(InsetIntoDataBaseQuery, safeValues).then((results) => {
-
                 res.render('login');
             })
         }
@@ -109,15 +111,15 @@ async function handleLogin(req, res) {
     try {
         const email = req.body.email;
         const password = req.body.pass;
-        const safe = [email]
+        const safe = [email];
         const getDataBaseQuery = 'SELECT * FROM users WHERE email=$1;';
         await client.query(getDataBaseQuery, safe).then(async(results) => {
 
             if (results) {
-                const validation = await bcrypt.compare(password, results.rows[0].pass)
+                const validation = await bcrypt.compare(password, results.rows[0].pass);
 
                 if (validation) {
-                    res.render("profile", { results: results.rows })
+                    res.render("profile", { results: results.rows });
                 } else {
                     res.send("Wrong PASS");
                 };
@@ -133,7 +135,7 @@ async function handleLogin(req, res) {
 };
 
 
-// ---------------------------------
+// --------------------------------------------------------------
 app.post('/quiz', handleQuiz);
 
 function handleQuiz(req, res) {
@@ -159,8 +161,8 @@ app.post('/showAllQuestions', handleUserQuestions);
 function handleUserQuestions(req, res) {
     const { value } = req.body;
     const correctAnswer = 'SELECT * FROM quiz;'
-
     let score = 0;
+
     client.query(correctAnswer).then(result => {
         res.render('profile', { results: result.rows })
 
@@ -221,20 +223,24 @@ function Question(question) {
 function updateQuiz(req, res) {
 
     const quizId = req.params.user_id;
+
     const { question, optionA, optionB, optionC, optionD, correctAnswer } = req.body
 
-    const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer];
+    const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer, quizId];
 
-    const updateQuery = 'UPDATE quiz SET question=$1, optionA=$2, optionB=$3, optionC=$4, optionD=$5,correctAnswer=$6;';
+    const updateQuery = 'UPDATE quiz SET question=$1, optionA=$2, optionB=$3, optionC=$4, optionD=$5,correctAnswer=$6 WHERE user_id=$7;';
 
     client.query(updateQuery, safeValues).then(results => {
-        res.render(`/profile`, { results: results.rows });
-    });
+        res.render('profile', { results: results.rows });
+
+    }).catch(error => {
+        console.error('ERROR', error);
+        res.status(404).send('Sorry , Something went wrong');
+    });;
 }
 
 
 function deleteQuiz(req, res) {
-
     const id = req.params.user_id;
     let safeValues = [id];
 
