@@ -192,7 +192,6 @@ function startQuiz(req, res) {
         difficulty: req.body.level
     }
     const url = `https://opentdb.com/api.php?amount=10&category=${queryObject.category}&difficulty=${queryObject.difficulty}&type=multiple`;
-    //console.log(url);
     superagent.get(url).then(resData => {
         if (resData.body.response_code === 0) {
             let questions = resData.body.results.map(question => {
