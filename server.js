@@ -14,6 +14,7 @@ const client = new pg.Client({
     connectionString: DATABASE_URL,
 });
 
+
 const categories = [{ id: 9, name: 'General Knowledge' },
     { id: 18, name: 'Computers' },
     { id: 13, name: 'Mathemetics' },
@@ -34,31 +35,47 @@ const categories = [{ id: 9, name: 'General Knowledge' },
     { id: 32, name: 'Entertainment : Cartoon & Animation' },
 
 ]
+
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
+
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("./public"));
+app.use(express.static("public/styles"));
 app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get('/login', (req, res) => {
-    res.render('login');
+app.put('/profile/:user_id', updateQuiz);
+app.delete('/profile/:user_id', deleteQuiz);
+
+// ---------------------------------
+app.get("/logout", (req, res) => {
+    res.render("index", { message: "You have logged out successfully" });
+});
+
+app.get('/scores', (req, res) => {
+    res.render('scores');
 });
 
 app.get('/register', (req, res) => {
     res.render('register')
 });
 
+app.get('/about-us', (req, res) => {
+    res.render('about-us')
+});
 app.post('/register', handelRegister);
 
-
+let email = '';
 async function handelRegister(request, res) {
 
     try {
-        const email = request.body.email;
+        email = request.body.email;
         const password = request.body.pass;
-
         const name = request.body.name;
+
         const password2 = request.body.pass2;
         const date = request.body.date;
         let errors = [];
@@ -95,16 +112,27 @@ async function handelRegister(request, res) {
     }
 
 }
+// ---------------------------------
 
+
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
+app.get('/addQuiz', (req, res) => {
+    res.render('addQuiz', { results: [] });
+});
+
+app.get('/profile', (req, res) => {
+    res.render('profile', { results: [] });
+});
 
 app.post('/login', handleLogin);
 
 async function handleLogin(req, res) {
-
-
     try {
         const email = req.body.email;
-        const password = req.body.password;
+        const password = req.body.pass;
         const safe = [email]
         const getDataBaseQuery = 'SELECT * FROM users WHERE email=$1;';
         await client.query(getDataBaseQuery, safe).then(async(results) => {
@@ -113,19 +141,55 @@ async function handleLogin(req, res) {
                 const validation = await bcrypt.compare(password, results.rows[0].pass)
 
                 if (validation) {
-                    res.render("../views/quiz", { questions: [] })
+                    res.render("profile", { results: results.rows })
                 } else {
                     res.send("Wrong PASS");
                 };
 
             } else {
-                res.send("No such data in theD DB");
+                res.send("No such data in the DB");
             };
         });
     } catch (error) {
         errorHandler(error, res)
     };
 };
+
+
+// ---------------------------------
+app.post('/quiz', handleQuiz);
+
+function handleQuiz(req, res) {
+    const { question, optionA, optionB, optionC, optionD, correctAnswer } = req.body
+
+    const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer];
+    const sqlQuery = 'INSERT INTO quiz (question, optionA, optionB, optionC, optionD, correctAnswer) Values ($1, $2, $3, $4, $5, $6);'
+
+    client.query(sqlQuery, safeValues);
+
+    const getAllQuestions = 'SELECT * FROM quiz;'
+    client.query(getAllQuestions).then(result => {
+        if (result) {
+            res.render('profile', { results: result.rows });
+        }
+    });
+
+}
+
+// ----------------------------------------------------------------
+app.post('/showAllQuestions', handleUserQuestions);
+
+function handleUserQuestions(req, res) {
+    const { value } = req.body;
+    const correctAnswer = 'SELECT * FROM quiz;'
+
+    let score = 0;
+    client.query(correctAnswer).then(result => {
+        res.render('profile', { results: result.rows })
+
+        console.log(score);
+    })
+}
 
 
 ////////////////////////////////////////////////////////////// Quizzes Part
@@ -183,6 +247,41 @@ function Question(question) {
 function errorHandler(error, res) {
     res.render('error', { error: error });
 }
+
+
+
+
+function updateQuiz(req, res) {
+
+    const quizId = req.params.user_id;
+    const { question, optionA, optionB, optionC, optionD, correctAnswer } = req.body
+
+    const safeValues = [question, optionA, optionB, optionC, optionD, correctAnswer];
+
+    const updateQuery = 'UPDATE quiz SET question=$1, optionA=$2, optionB=$3, optionC=$4, optionD=$5,correctAnswer=$6;';
+
+    client.query(updateQuery, safeValues).then(results => {
+        res.render(`/profile`, { results: results.rows });
+    });
+}
+
+
+function deleteQuiz(req, res) {
+
+    const id = req.params.user_id;
+    let safeValues = [id];
+
+    let deleteQuery = `DELETE FROM quiz WHERE user_id=$1;`;
+    client.query(deleteQuery, safeValues).then(() => {
+        res.redirect('/');
+
+    }).catch(error => {
+        console.error('ERROR', error);
+        res.status(404).send('Sorry , Something went wrong');
+    });
+}
+
+
 client.connect().then(() =>
     app.listen(PORT, () => console.log(`Listening on port: ${PORT}`))
 );
