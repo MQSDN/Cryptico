@@ -1,3 +1,4 @@
+
 Drop table if exists users CASCADE;
 Create table users(id serial primary key not null,
 name VARCHAR(200) not null,
@@ -11,6 +12,7 @@ Drop table if exists userProfile CASCADE;
 Create table   userProfile (userResult Numeric);
 
 
+
 Drop table if exists quiz CASCADE;
 Create table quiz (id serial primary key not null,
 user_id INT, 
@@ -22,3 +24,4 @@ optionD text,
 correctAnswer text,
 CONSTRAINT FK_user_id FOREIGN KEY (user_id)
     REFERENCES users(id));
+
