@@ -49,6 +49,8 @@ app.get('/', (req, res) => {
 
 app.put('/update/:quiz_id', updateQuiz);
 app.delete('/delete/:quiz_id', deleteQuiz);
+
+
 // ---------------------------------
 app.get("/logout", (req, res) => {
     res.render("index", { message: "You have logged out successfully" });
