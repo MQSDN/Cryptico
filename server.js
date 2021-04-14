@@ -1,7 +1,6 @@
 'use strict';
 require('dotenv').config();
 
-const alert = require('alert');
 const express = require('express');
 const app = express();
 const pg = require('pg');
@@ -10,7 +9,6 @@ const superagent = require('superagent');
 const bcrypt = require('bcrypt');
 const PORT = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL;
-let registerFlag = 0;
 let loginFlag = 0;
 
 const client = new pg.Client({
@@ -26,7 +24,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public/styles"));
 app.get('/', (req, res) => {
-    res.render('index', { username: '' });
+    res.render('index', { username: username });
 });
 
 app.put('/update/:quiz_id', updateQuiz);
@@ -35,9 +33,10 @@ app.delete('/delete/:quiz_id', deleteQuiz);
 
 
 // -----------------------------------------------------------------------------------------------------
+
 app.get("/logout", (req, res) => {
     loginFlag = 0;
-    res.render("index", { message: "You have logged out successfully" });
+    res.render("index", { message: "You have logged out successfully", username: username });
 });
 
 app.get('/scores', (req, res) => {
@@ -56,15 +55,18 @@ app.get('/about-us', (req, res) => {
 });
 app.post('/register', handelRegister);
 
+let email = '';
+let username = '';
 
 async function handelRegister(request, res) {
 
     try {
-        let email = request.body.email;
+        email = request.body.email;
         const password = request.body.pass;
         const name = request.body.name;
         const password2 = request.body.pass2;
         const date = request.body.date;
+        username = name;
 
         let errors = [];
         if (!name || !email || !password || !password2 || !date) {
@@ -89,8 +91,9 @@ async function handelRegister(request, res) {
             const safeValues = [name, email, hash, date];
             const InsetIntoDataBaseQuery = 'INSERT INTO users (name, email, pass , date) VALUES ($1, $2, $3, $4);';
             await client.query(InsetIntoDataBaseQuery, safeValues).then((results) => {
+
                 registerFlag = 1;
-                res.render('login', { username: name });
+                res.render('login', { username: username });
             })
         }
 
@@ -100,20 +103,23 @@ async function handelRegister(request, res) {
     }
 
 }
+
+
+
 // ---------------------------------
 
 
 app.get('/login', (req, res) => {
-    res.render('login');
+    res.render('login', { username: username });
 });
 
 app.get('/addQuiz', (req, res) => {
-    res.render('addQuiz', { results: [] });
+    res.render('addQuiz', { results: [], username: username });
 });
 
 app.get('/profile', (req, res) => {
     if (loginFlag === 0) {
-        res.render('login');
+        res.render('login', { username: username });
     }
     getUserQuestions(res);
 });
@@ -122,7 +128,7 @@ app.post('/login', handleLogin);
 
 async function handleLogin(req, res) {
     try {
-        let email = req.body.email;
+        email = req.body.email;
         const password = req.body.pass;
         const safe = [email];
         const getDataBaseQuery = 'SELECT * FROM users WHERE email=$1;';
@@ -133,11 +139,16 @@ async function handleLogin(req, res) {
                 let name = results.rows[0].name;
 
                 if (validation) {
+                    let safeValue = [email];
+                    let selectQ = 'SELECT name FROM users WHERE email=$1';
+                    client.query(selectQ, safeValue).then(result => {
+                        username = result.rows[0].name;
+                    });
                     loginFlag = 1;
                     res.render("quiz", {
                         questions: [],
                         email: email,
-                        username: name
+                        username: username
                     });
 
                 } else {
@@ -162,7 +173,6 @@ app.post('/add', handleQuiz);
 function handleQuiz(req, res) {
     const { question, optionA, optionB, optionC, optionD, correctAnswer, email } = req.body
 
-    //console.log(email);
     const safeValue = [email];
     const selectQuery = 'SELECT id FROM users WHERE email=$1;';
 
@@ -190,9 +200,8 @@ function handleUserQuestions(req, res) {
     let score = 0;
 
     client.query(correctAnswer).then(result => {
-        res.render('profile', { results: result.rows })
+        res.render('profile', { results: result.rows, username: username })
 
-        console.log(score);
     })
 }
 
@@ -204,7 +213,7 @@ app.get('/start', (req, res) => {
         res.render('login');
     }
     let email = req.body.email;
-    res.render('quiz', { questions: [], email: email });
+    res.render('quiz', { questions: [], email: email, username: username });
 })
 
 
@@ -229,8 +238,7 @@ function startQuiz(req, res) {
         const questions = resData.body.results.map(question => {
             return new Question(question);
         });
-        // console.log(questions);
-        res.render('quiz', { questions: questions, email: email });
+        res.render('quiz', { questions: questions, email: email, username: username });
 
     }).catch(error => {
         errorHandler(error, res);
@@ -246,7 +254,6 @@ app.post('/submit', (req, res) => {
     const safeValue = [email];
     const selectQuery = 'SELECT id FROM users WHERE email=$1;';
 
-    //console.log(email);
 
     let array = req.body.correctAnswer;
 
@@ -292,11 +299,9 @@ app.post('/submit', (req, res) => {
         client.query(sqlQuery, safeValues);
 
         const safeValueR = [user_id];
-        console.log(user_id);
         const selectQueryR = 'SELECT userresult FROM userProfile WHERE user_id=$1 ORDER BY userresult DESC ;';
         client.query(selectQueryR, safeValueR).then(result => {
-            console.log(result);
-            res.render('scores', { scores: result.rows, username: 'name' });
+            res.render('scores', { scores: result.rows, username: username });
 
         });
 
@@ -376,7 +381,7 @@ function getUserQuestions(res) {
     const getAllQuestions = 'SELECT * FROM quiz;'
     client.query(getAllQuestions).then(result => {
         if (result) {
-            res.render('profile', { results: result.rows });
+            res.render('profile', { results: result.rows, username: username });
         }
     });
 }
