@@ -1,4 +1,5 @@
 body {
+    background-color: rgba(240, 220, 194, 0.575);
     margin: 0;
 }
 
@@ -240,10 +241,6 @@ main p {
 
 * {
     box-sizing: border-box;
-}
-
-input[type="radio"] {
-    display: none;
 }
 
 .container {
@@ -491,23 +488,50 @@ input[type="radio"]:checked+label.btn::after {
 
 .to:hover {
     opacity: 0.8;
-}
-.updateForm{
-    background-color: #656665;
-    color: white;
-    padding: 14px 20px;
-    /* margin: 8px 0; */
-    border: none;
-    cursor: pointer;
-    width: 70%;
-    margin-left: -359;
-    /* margin-right: auto; */
-    display: block;
-    height: 60px;
-    border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 17px;
-    font-weight: bold;
 
 }
+
+
+#userQuestions{
+  text-align: center;
+  margin-top: 20px;
+ border: #111;
+  display: inline-block;
+
+
+#userQuestions {
+    text-align: center;
+    margin-top: 20px;
+    border: #111;
+    display: inline-block;
+}
+
+#toEdit {
+    display: inline-block;
+    height: 60px;
+    background-color: #656665;
+}
+
+#deletbu {
+    display: inline-block;
+    color: white;
+
+
+}
+
+.updateForm input{
+    width: 40%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  text-align: center;
+}
+#id01{
+    border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
