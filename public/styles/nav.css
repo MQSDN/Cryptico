@@ -468,6 +468,7 @@ input[type="radio"]:checked+label.btn::after {
     margin-left: 500px;
     margin-top: 150px;
     width: 50%;
+    
 }
 
 .to {
@@ -523,9 +524,40 @@ input[type="radio"]:checked+label.btn::after {
   border-radius: 4px;
   box-sizing: border-box;
   text-align: center;
+  font-size: xx-large;
+}
+.updateForm label{
+    font-size: xx-large;
 }
 #id01{
     border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: cursive;
+  font-size: x-large;
+}
+
+#lastform input {
+    font-size: larger;
+    color: blue;
+
+
+}
+
+ol.c {list-style-type: none ;
+    font-size: xx-large;
+    background-color:#ead3cb;
+    font-family: cursive;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+ol.c h4{
+    color: #c06014;
+
 }
