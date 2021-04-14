@@ -47,7 +47,6 @@ button {
     right: 0px;
     margin: auto;
     transition: .3s;
-
     /* font-family: 'Cairo', sans-serif;  */
     background-color: #5c5d5c;
     color: white;
@@ -564,6 +563,22 @@ button:focus {
     border-radius: 5px;
 }
 
+#qa:hover{
+opacity: 0.4;
+}
+#qa{
+background-color: gray;
+width: 250px;
+border: none;
+color: white;
+padding: 16px 32px;
+text-decoration: none;
+margin: 4px 2px;
+cursor: pointer;
+margin-left: 260px;
+border-radius: 5px;
+}
+
 #out:hover {
     opacity: .4
 }
@@ -573,8 +588,10 @@ h1,
 h4 {
     font-size: calc(5px + 8vh);
     line-height: calc(0px + 10vh);
+
     text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500, 0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
     color: #fff6a9;
+
     font-family: "Sacramento", cursive;
     text-align: center;
     animation: blink 12s infinite;

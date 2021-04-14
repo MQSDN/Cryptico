@@ -492,4 +492,44 @@ input[type="radio"]:checked+label.btn::after {
 
 .to:hover {
     opacity: 0.8;
+
 }
+
+#userQuestions{
+  text-align: center;
+  margin-top: 20px;
+ border: #111;
+  display: inline-block;
+
+}
+
+#toEdit{
+    display: inline-block;
+    height: 60px;
+    background-color: #656665;
+
+
+}
+
+#deletbu{
+    display: inline-block;
+    color: white;
+
+}
+
+.updateForm input{
+    width: 40%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  text-align: center;
+}
+#id01{
+    border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
