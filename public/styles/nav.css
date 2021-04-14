@@ -243,10 +243,6 @@ main p {
     box-sizing: border-box;
 }
 
-input[type="radio"] {
-    display: none;
-}
-
 .container {
     position: relative;
     height: 80vh;
@@ -495,25 +491,31 @@ input[type="radio"]:checked+label.btn::after {
 
 }
 
+
 #userQuestions{
   text-align: center;
   margin-top: 20px;
  border: #111;
   display: inline-block;
 
+
+#userQuestions {
+    text-align: center;
+    margin-top: 20px;
+    border: #111;
+    display: inline-block;
 }
 
-#toEdit{
+#toEdit {
     display: inline-block;
     height: 60px;
     background-color: #656665;
-
-
 }
 
-#deletbu{
+#deletbu {
     display: inline-block;
     color: white;
+
 
 }
 

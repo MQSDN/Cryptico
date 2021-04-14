@@ -1,0 +1,29 @@
+#quizF {
+    text-align: center;
+}
+
+#category {
+    width: 50%;
+    height: 50px;
+    background-color: #251d0eda;
+    color: white;
+    font-size: 20px;
+}
+
+#level {
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    height: 40px;
+    background-color: #251d0eda;
+    color: white;
+    font-size: 20px;
+}
+
+#start {
+    margin-top: 2%;
+    width: 10%;
+    height: 40px;
+    background-color: #251d0eda;
+    color: white;
+}

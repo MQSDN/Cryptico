@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="aboutus.css">
-
     <link rel="stylesheet" href="background.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">‏
@@ -18,38 +17,20 @@
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
 </head>
+
 <body>
     <header id="home">
-         <%- include('./layout/nav.ejs') %> 
-        <h1>Mr. Quiz </h1>
+        <%- include('./layout/nav.ejs') %>
+
+            <h1>Mr. Quiz </h1>
     </header>
-    <body>
-        
-        </header>
-    </body>
-    <script>
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "250px";
-            document.getElementById("main").style.marginLeft = "250px";
-            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-        }
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-            document.getElementById("main").style.marginLeft = "0";
-            document.body.style.backgroundColor = "white";
-        }
-    </script>
-    </nav>
+
+
+
+
+
+
     <main>
-        <div class='light x1'></div>
-        <div class='light x2'></div>
-        <div class='light x3'></div>
-        <div class='light x4'></div>
-        <div class='light x5'></div>
-        <div class='light x6'></div>
-        <div class='light x7'></div>
-        <div class='light x8'></div>
-        <div class='light x9'></div>
         <div class="photos">
             <div class="wrap">
                 <div class="tile ">
@@ -94,10 +75,14 @@
             <!-- </div> -->
         </div>
         <nav>
+
             <div id="mySidenav" class="sidenav">
+
+
                 <div id="logo">
                     <span class="profile-img"><img src="https://www.hrzone.com/sites/all/themes/pp/img/default-user.png" width="110px" /></span>
                 </div>
+
                 <div id="options">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                     <a href="/">Home</a>
@@ -105,7 +90,10 @@
                     <a href="/scores">Scores</a>
                     <a href="/profile">Profile</a>
                     <a href="/about-us">About-Us</a>
+
                 </div>
+
+
                 <div class="icon-bar">
                     <div> <a id="active1" href="#"><i class="fa fa-home"></i></a>
                     </div>
@@ -239,4 +227,5 @@
     </main>
 
 </body>
+
 </html>
