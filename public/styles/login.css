@@ -23,7 +23,7 @@ button {
     margin-left: 310px;
 }
 
-*/ button:hover {
+button:hover {
     opacity: 0.4;
 }
 
@@ -52,11 +52,6 @@ img.avatar {
     width: 40%;
     border-radius: 50%;
 }
-
-
-/* .container {
-    padding: 16px;
-} */
 
 span.psw {
     float: right;
@@ -153,22 +148,10 @@ a {
 }
 
 .signin {
-    /* background-color: #F1F1F1; */
-    /* text-align: center; */
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
-
-
-/* #id01 {
-    width: 1000px;
-} */
-
-
-/* #backBtn {
-    text-align: center;
-} */
 
 #logBtn {
     background-color: #5c5d5c;
@@ -196,30 +179,14 @@ a {
 
 @import url("https://fonts.googleapis.com/css?family=Sacramento&display=swap");
 h2 {
-    /* font-size: calc(5px + 8vh);
-    line-height: calc(0px + 10vh);
-    text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500, 0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
-    color: #fff6a9;
-    font-family: "Sacramento", cursive;
-    text-align: center;
-    animation: blink 12s infinite;
-    -webkit-animation: blink 4s infinite; */
     font-size: calc(5px + 8vh);
     line-height: calc(0px + 10vh);
     text-align: center;
-    /* animation: blink 12s infinite; */
-    /* -webkit-animation: blink 4s infinite; */
 }
 
 #toRenderQuestions {
-    /* position: absolute; */
-    /* border: 2px solid white; */
-    /* background: transparent; */
-    /* font-family: 'Roboto', sans-serif; */
-    /* color: white; */
     background-color: #5c5d5c;
     color: white;
-    /* padding: 14px 20px; */
     margin: 8px 0;
     border: none;
     cursor: pointer;

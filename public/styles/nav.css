@@ -12,7 +12,7 @@
             top: 0;
             left: 0;
             background-color: #251d0eda;
-            overflow-x: hidden;
+            overflow: hidden;
             transition: 0.5s;
             padding-top: 60px;
         }
@@ -204,7 +204,8 @@
             position: absolute;
             padding: 10px;
             border-radius: 20px;
-            color: #ffd900;
+            color: #fda708;
+            ;
             background-color: rgba(0, 0, 0, 0.986);
         }
         
@@ -374,6 +375,10 @@
         L O G I C 
  ===================*/
         /* slide logic */
+        
+        input[type="radio"] {
+            display: none;
+        }
         
         input[type="radio"]:checked#slide-2-trigger~div.slide-wrapper>div#slide-role {
             left: -100%;

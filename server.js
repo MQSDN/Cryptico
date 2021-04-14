@@ -36,14 +36,28 @@ app.delete('/delete/:quiz_id', deleteQuiz);
 
 app.get("/logout", (req, res) => {
     loginFlag = 0;
-    res.render("index", { message: "You have logged out successfully", username: username });
+    res.render("index", { message: "You have logged out successfully", username: '' });
 });
 
 app.get('/scores', (req, res) => {
     if (loginFlag === 0) {
         res.render('login');
     }
-    res.render('scores');
+    const safeValue = [email];
+    const selectQuery = 'SELECT id FROM users WHERE email=$1;';
+    let user_id = 0;
+    client.query(selectQuery, safeValue).then(result => {
+        user_id = result.rows[0].id;
+        const safeValueR = [user_id];
+        const selectQueryR = 'SELECT userresult FROM userProfile WHERE user_id=$1 ORDER BY userresult DESC ;';
+        client.query(selectQueryR, safeValueR).then(result => {
+            res.render('scores', { scores: result.rows, username: username });
+
+        });
+    })
+
+
+
 });
 
 app.get('/register', (req, res) => {
@@ -51,7 +65,7 @@ app.get('/register', (req, res) => {
 });
 
 app.get('/about-us', (req, res) => {
-    res.render('about-us')
+    res.render('about-us', { username: username })
 });
 app.post('/register', handelRegister);
 
@@ -92,7 +106,7 @@ async function handelRegister(request, res) {
             const InsetIntoDataBaseQuery = 'INSERT INTO users (name, email, pass , date) VALUES ($1, $2, $3, $4);';
             await client.query(InsetIntoDataBaseQuery, safeValues).then((results) => {
 
-                registerFlag = 1;
+                let registerFlag = 1;
                 res.render('login', { username: username });
             })
         }
