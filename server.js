@@ -144,7 +144,10 @@ async function handleLogin(req, res) {
 
                 if (validation) {
 
-                    res.render("quiz", { questions: [] })
+                    res.render("quiz", {
+                        questions: [],
+                        email: email
+                    });
 
                 } else {
                     res.send("Wrong PASS");
@@ -185,10 +188,6 @@ function handleQuiz(req, res) {
     res.redirect('/profile');
 }
 
-////////////////////////////////////////////////////////////// Quizzes Part
-app.get('/start',(req,res)=>{
-    res.render('quiz',{questions:[]});
-})
 
 
 // ----------------------------------------------------------------
@@ -209,17 +208,20 @@ function handleUserQuestions(req, res) {
 
 //////////////////////////////////////// Quizzes Part//////////////////////////////////////////////////////////////////////////////////////////
 app.get('/start', (req, res) => {
-    res.render('quiz', { questions: [] })
+    let email = req.body.email;
+    res.render('quiz', { questions: [], email: email })
 })
 
 
 
 app.post('/start', startQuiz);
 
-let score = 0;
-let array;
+
 
 function startQuiz(req, res) {
+
+    let email = req.body.email;
+
     const queryObject = {
         category: req.body.category,
         difficulty: req.body.level
@@ -229,52 +231,74 @@ function startQuiz(req, res) {
 
     superagent.get(url).then(resData => {
 
-        res.render('quiz', { questions: resData.body.results });
-
-
-        app.post('/submit', (req, res) => {
-
-            let correct = req.body.correctAnswer;
-
-            array = resData.body.results.map(obj => {
-                return obj.question;
-            })
-
-            // let first = array[0]
-
-            // console.log(first);
-
-            if (correct.includes(req.body.array[0])) {
-                score++
-            }
-            // } else if (correct.includes(req.body.array[1].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[2].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[3].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[4].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[5].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[6].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[7].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[8].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[9].toString())) {
-            //     score++
-            // }
-
-            console.log(score);
+        const questions = resData.body.results.map(question => {
+            return new Question(question);
         });
+        // console.log(questions);
+        res.render('quiz', { questions: questions, email: email });
 
     }).catch(error => {
         errorHandler(error, res);
     });
 }
 
+
+app.post('/submit', (req, res) => {
+
+    let score = 0;
+    let email = req.body.email;
+
+    const safeValue = [email];
+    const selectQuery = 'SELECT id FROM users WHERE email=$1;';
+
+
+    //console.log(email);
+
+    let array = req.body.correctAnswer;
+
+    if (req.body.q0 === array[0]) {
+        score++
+    }
+    if (req.body.q1 === array[1]) {
+        score++
+    }
+    if (req.body.q2 === array[2]) {
+        score++
+    }
+    if (req.body.q3 === array[3]) {
+        score++
+    }
+    if (req.body.q4 === array[4]) {
+        score++
+    }
+    if (req.body.q5 === array[5]) {
+        score++
+    }
+    if (req.body.q6 === array[6]) {
+        score++
+    }
+    if (req.body.q7 === array[7]) {
+        score++
+    }
+    if (req.body.q8 === array[8]) {
+        score++
+    }
+    if (req.body.q9 === array[9]) {
+        score++
+    }
+
+    let user_id = 0;
+    client.query(selectQuery, safeValue).then(result => {
+        user_id = result.rows[0].id;
+        const safeValues = [user_id, score];
+        const sqlQuery = 'INSERT INTO userProfile (user_id,userResult ) Values ($1, $2);'
+
+        client.query(sqlQuery, safeValues);
+    });
+
+    res.render('scores', { score: score });
+
+});
 
 function decodeHtml(str) {
     var map = {
@@ -295,7 +319,15 @@ function errorHandler(error, res) {
 }
 
 
-
+function Question(question) {
+    this.question = decodeHtml(question.question);
+    this.choices = [decodeHtml(question.incorrect_answers[0]),
+        decodeHtml(question.incorrect_answers[1]),
+        decodeHtml(question.incorrect_answers[2]),
+        decodeHtml(question.correct_answer)
+    ];
+    this.correctAnswer = decodeHtml(question.correct_answer);
+}
 
 function updateQuiz(req, res) {
 

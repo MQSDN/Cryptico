@@ -9,7 +9,9 @@ date date not null
 
 
 Drop table if exists userProfile CASCADE;
-Create table   userProfile (userResult Numeric);
+Create table userProfile (user_id INT ,userResult Numeric,
+CONSTRAINT FK_user_name FOREIGN KEY (user_id)
+REFERENCES users(id));
 
 
 
