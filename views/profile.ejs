@@ -53,11 +53,11 @@
         <% results.forEach(fromDB=> { %>
             <div class="myQuestion">
                 <section id="deleteSection">
-                    <form class="updateForm" action="delete/<%= fromDB.id %>?_method=DELETE" method="POST">
-                        <input type="submit" value="Delete"></input>
+                    <form  action="delete/<%= fromDB.id %>?_method=DELETE" method="POST">
+                        <button class="to" id="deletbu" type="submit" value="Delete">Delete</button>
                     </form>
                 </section>
-                <button id="toEdit" type="submit">Edit</button>
+                <button class="to" id="toEdit" type="submit">Edit</button>
                 <section id="updateSection" style="display: none;">
                     <div id="id01" class="modal">
                     <form class="updateForm" id="formZ" action="update/<%= fromDB.id %>?_method=PUT" method="POST">
