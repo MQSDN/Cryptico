@@ -1,6 +1,7 @@
 'use strict';
 require('dotenv').config();
 
+const alert = require('alert');
 const express = require('express');
 const app = express();
 const pg = require('pg');
@@ -9,32 +10,12 @@ const superagent = require('superagent');
 const bcrypt = require('bcrypt');
 const PORT = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL;
+let registerFlag = 0;
+let loginFlag = 0;
 
 const client = new pg.Client({
     connectionString: DATABASE_URL,
 });
-
-
-const categories = [{ id: 9, name: 'General Knowledge' },
-    { id: 18, name: 'Computers' },
-    { id: 13, name: 'Mathemetics' },
-    { id: 23, name: 'History' },
-    { id: 21, name: 'Sports' },
-    { id: 21, name: 'Celebrities' },
-    { id: 21, name: 'Geography' },
-    { id: 28, name: 'Vehicles' },
-    { id: 20, name: 'Mythology' },
-    { id: 17, name: 'Science & Nature' },
-    { id: 10, name: 'Entertainment : Books' },
-    { id: 11, name: 'Entertainment : Film' },
-    { id: 12, name: 'Entertainment : Music' },
-    { id: 14, name: 'Entertainment : Television' },
-    { id: 15, name: 'Entertainment : Video Games' },
-    { id: 16, name: 'Entertainment : Board Games' },
-    { id: 29, name: 'Entertainment : Comics' },
-    { id: 32, name: 'Entertainment : Cartoon & Animation' },
-
-]
 
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
@@ -45,7 +26,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public/styles"));
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', { username: '' });
 });
 
 app.put('/update/:quiz_id', updateQuiz);
@@ -55,10 +36,14 @@ app.delete('/delete/:quiz_id', deleteQuiz);
 
 // -----------------------------------------------------------------------------------------------------
 app.get("/logout", (req, res) => {
+    loginFlag = 0;
     res.render("index", { message: "You have logged out successfully" });
 });
 
 app.get('/scores', (req, res) => {
+    if (loginFlag === 0) {
+        res.render('login');
+    }
     res.render('scores');
 });
 
@@ -104,7 +89,8 @@ async function handelRegister(request, res) {
             const safeValues = [name, email, hash, date];
             const InsetIntoDataBaseQuery = 'INSERT INTO users (name, email, pass , date) VALUES ($1, $2, $3, $4);';
             await client.query(InsetIntoDataBaseQuery, safeValues).then((results) => {
-                res.render('login');
+                registerFlag = 1;
+                res.render('login', { username: name });
             })
         }
 
@@ -126,6 +112,9 @@ app.get('/addQuiz', (req, res) => {
 });
 
 app.get('/profile', (req, res) => {
+    if (loginFlag === 0) {
+        res.render('login');
+    }
     getUserQuestions(res);
 });
 
@@ -141,12 +130,14 @@ async function handleLogin(req, res) {
 
             if (results) {
                 const validation = await bcrypt.compare(password, results.rows[0].pass);
+                let name = results.rows[0].name;
 
                 if (validation) {
-
+                    loginFlag = 1;
                     res.render("quiz", {
                         questions: [],
-                        email: email
+                        email: email,
+                        username: name
                     });
 
                 } else {
@@ -208,8 +199,12 @@ function handleUserQuestions(req, res) {
 
 //////////////////////////////////////// Quizzes Part//////////////////////////////////////////////////////////////////////////////////////////
 app.get('/start', (req, res) => {
+
+    if (loginFlag === 0) {
+        res.render('login');
+    }
     let email = req.body.email;
-    res.render('quiz', { questions: [], email: email })
+    res.render('quiz', { questions: [], email: email });
 })
 
 
@@ -251,7 +246,6 @@ app.post('/submit', (req, res) => {
     const safeValue = [email];
     const selectQuery = 'SELECT id FROM users WHERE email=$1;';
 
-
     //console.log(email);
 
     let array = req.body.correctAnswer;
@@ -287,6 +281,8 @@ app.post('/submit', (req, res) => {
         score++
     }
 
+    score = score * 10;
+
     let user_id = 0;
     client.query(selectQuery, safeValue).then(result => {
         user_id = result.rows[0].id;
@@ -294,10 +290,17 @@ app.post('/submit', (req, res) => {
         const sqlQuery = 'INSERT INTO userProfile (user_id,userResult ) Values ($1, $2);'
 
         client.query(sqlQuery, safeValues);
+
+        const safeValueR = [user_id];
+        console.log(user_id);
+        const selectQueryR = 'SELECT userresult FROM userProfile WHERE user_id=$1 ORDER BY userresult DESC ;';
+        client.query(selectQueryR, safeValueR).then(result => {
+            console.log(result);
+            res.render('scores', { scores: result.rows, username: 'name' });
+
+        });
+
     });
-
-    res.render('scores', { score: score });
-
 });
 
 function decodeHtml(str) {
