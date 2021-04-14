@@ -185,11 +185,6 @@ function handleQuiz(req, res) {
     res.redirect('/profile');
 }
 
-////////////////////////////////////////////////////////////// Quizzes Part
-app.get('/start',(req,res)=>{
-    res.render('quiz',{questions:[]});
-})
-
 
 // ----------------------------------------------------------------
 app.post('/showAllQuestions', handleUserQuestions);
@@ -211,7 +206,6 @@ function handleUserQuestions(req, res) {
 app.get('/start', (req, res) => {
     res.render('quiz', { questions: [] })
 })
-
 
 
 app.post('/start', startQuiz);
@@ -238,34 +232,22 @@ function startQuiz(req, res) {
 
             array = resData.body.results.map(obj => {
                 return obj.question;
-            })
+            });
 
-            // let first = array[0]
 
-            // console.log(first);
+            console.log(req.body.value);
 
-            if (correct.includes(req.body.array[0])) {
+            if (correct.includes(req.body.value)) {
+                score++
+
+            } else if (correct.includes(req.body.answer2)) {
+                score++
+            } else if (correct.includes(req.body.answer3)) {
+                score++
+            } else if (correct.includes(req.body.answer4)) {
                 score++
             }
-            // } else if (correct.includes(req.body.array[1].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[2].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[3].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[4].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[5].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[6].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[7].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[8].toString())) {
-            //     score++
-            // } else if (correct.includes(req.body.array[9].toString())) {
-            //     score++
-            // }
+
 
             console.log(score);
         });

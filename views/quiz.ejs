@@ -10,8 +10,15 @@
 </head>
 
 <body>
-    <header>
+    <header id="home">
+        <!-- <%- include('./layout/nav.ejs') %> -->
+
+        <h1>Mr. Quiz </h1>
+
+        <a class="registering" href="/profile"> Profile</a>
     </header>
+
+
 
 
     <main>
@@ -70,23 +77,21 @@
                         <%= question.question %>
                     </h5>
 
-                    <input type="radio" name="<%= question.question %>" value="<%= question.incorrect_answers[0] %>">
+                    <input type="radio" name='answer1' value="<%= question.incorrect_answers[0] %>" required>
                     <%= question.incorrect_answers[0] %>
                         </input>
 
-
-
-                        <input type="radio" name="<%= question.question %>" value="<%= question.incorrect_answers[1] %>">
+                        <input type="radio" name="answer2" value="<%= question.incorrect_answers[1] %>">
                         <%= question.incorrect_answers[1] %>
                             </input>
 
 
-                            <input type="radio" name="<%= question.question %>" value="<%= question.incorrect_answers[2] %>">
+                            <input type="radio" name="answer3" value="<%= question.incorrect_answers[2] %>">
                             <%= question.incorrect_answers[2] %>
                                 </input>
 
 
-                                <input type="radio" name="<%= question.question %>" value="<%= question.correct_answer %>">
+                                <input type="radio" name="answer4" value="<%= question.correct_answer %>">
                                 <%= question.correct_answer %>
                                     </input>
 
