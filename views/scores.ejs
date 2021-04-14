@@ -18,81 +18,36 @@
     </header>
     <br>
     <main>
-        <span class="heading">Score bord</span>
+        <span class="heading">Score board</span>
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star"></span>
-        <p>your score.</p>
+        <p>Your Scores.</p>
         <hr style="border:3px solid #f1f1f1">
 
-        <div>
-            <div class="row">
-                <div class="side">
 
-                    <div>higher score</div>
-
-
-
-                </div>
-                <div class="middle">
-                    <div class="bar-container">
-                        <div class="bar-5"></div>
+        <% scores.forEach((score ,index) =>{ %>
+            <% console.log(score.userresult); %>
+                <div class="row">
+                    <div class="side">
+                        <div>
+                            <%= `Score ${index+1}`%>
+                        </div>
+                    </div>
+                    <div class="middle">
+                        <div class="bar-container">
+                            <div class="bar-<%=(scores.length)-index%>"></div>
+                        </div>
+                    </div>
+                    <div class="side right">
+                        <div>
+                            <%= `${score.userresult}%`%>
+                        </div>
                     </div>
                 </div>
-                <div class="side right">
-                    <div>98%</div>
-                </div>
-                <div class="side">
-                    <div>score 2</div>
-                </div>
-                <div class="middle">
-                    <div class="bar-container">
-                        <div class="bar-4"></div>
-                    </div>
-                </div>
-                <div class="side right">
-                    <div>92%</div>
-                </div>
-                <div class="side">
-                    <div>score 3</div>
-                </div>
-                <div class="middle">
-                    <div class="bar-container">
-                        <div class="bar-3"></div>
-                    </div>
-                </div>
-                <div class="side right">
-                    <div>88%</div>
-                </div>
-                <br>
-                <div class="side">
-                    <div>score 4</div>
-                </div>
-                <div class="middle">
-                    <div class="bar-container">
-                        <div class="bar-2"></div>
-                    </div>
-                </div>
-                <div class="side right">
-                    <div>81%</div>
-                </div>
-                <br>
-                <div class="side">
-                    <div>score 5</div>
-                </div>
-                <div class="middle">
-                    <div class="bar-container">
-                        <div class="bar-1"></div>
-                    </div>
-                </div>
-                <div class="side right">
-                    <div>78%</div>
-                </div>
-            </div>
-
-        </div>
+                <% }); %>
     </main>
 </body>
 

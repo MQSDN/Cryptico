@@ -18,6 +18,7 @@
     },
     "homepage": "https://github.com/MQSDN/Cryptico#readme",
     "dependencies": {
+        "alert": "^5.0.10",
         "bcrypt": "^5.0.1",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
