@@ -10,13 +10,16 @@
 </head>
 
 <body>
-    <header>
+    <header id="home">
+        <%- include('./layout/nav.ejs') %>
+
+            <h1>Mr. Quiz </h1>
     </header>
 
 
     <main>
 
-        <form action="/start" method="POST">
+        <form id="quizF" action="/start" method="POST">
             <fieldset>
                 <select name="category" id="category">
                     <option value="choose">choose category ...</option>
@@ -48,7 +51,7 @@
             
         </select>
             </fieldset>
-            <fieldset>
+            <fieldset id="level">
                 <legend></legend>
                 <input type="radio" name="level" id="easy" value="easy" required> Easy </input>
                 <input type="radio" name="level" id="medium" value="medium"> Medium </input>
@@ -126,7 +129,7 @@
 
 
     <footer>
-        <a href="/users/logout ">Logout</a>
+        <a href="/logout ">Logout</a>
     </footer>
 
     <script>
