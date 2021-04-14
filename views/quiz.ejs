@@ -6,14 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="quizPage.css">
+
     <title>Quiz</title>
 </head>
 
 <body>
+
+
     <header id="home">
         <%- include('./layout/nav.ejs') %>
+            <h1 style="line-height: calc(235px + 10vh);"> Mr. Quiz </h1>
 
-            <h1>Mr. Quiz </h1>
     </header>
 
 
@@ -64,7 +67,7 @@
 
         </form>
 
-        <form action="/submit" method="post">
+        <form id='questions' action="/submit" method="post">
             <% questions.forEach((question ,index)=> {%>
                 <div class="tab" style="display: none;">
                     <h5>
@@ -72,56 +75,64 @@
                     </h5>
 
                     <input type="radio" name="<%= `q${index}` %>" value="<%= question.choices[0] %>">
-                    <%= question.choices[0] %>
-                        </input>
+                    <h3>
+                        <%= question.choices[0] %>
+                    </h3>
+                    </input>
 
 
 
-                        <input type="radio" name="<%= `q${index}` %>" value="<%= question.choices[1] %>">
+                    <input type="radio" name="<%= `q${index}` %>" value="<%= question.choices[1] %>">
+                    <h3>
                         <%= question.choices[1] %>
-                            </input>
+                    </h3>
+                    </input>
 
 
-                            <input type="radio" name="<%= `q${index}` %>" value="<%= question.choices[2] %>">
-                            <%= question.choices[2] %>
-                                </input>
+                    <input type="radio" name="<%= `q${index}` %>" value="<%= question.choices[2] %>">
+                    <h3>
+                        <%= question.choices[2] %>
+                    </h3>
+                    </input>
 
 
-                                <input type="radio" name="<%= `q${index}` %>" value="<%= question.choices[3] %>">
-                                <%= question.choices[3] %>
-                                    </input>
+                    <input type="radio" name="<%= `q${index}` %>" value="<%= question.choices[3] %>">
+                    <h3>
+                        <%= question.choices[3] %>
+                    </h3>
+                    </input>
                 </div>
 
                 <% }); %>
 
-                    <div style="overflow:auto;">
-                        <div style="float:right;">
-                            <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                            <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+
+                    <div id="buttons">
+                        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                        <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+
+                        <!-- Circles which indicates the steps of the form: -->
+                        <div style="text-align:center;margin-top:40px;">
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
                         </div>
-                    </div>
-                    <!-- Circles which indicates the steps of the form: -->
-                    <div style="text-align:center;margin-top:40px;">
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
+
+                        <% questions.forEach(question => {%>
+                            <input type="hidden" name="correctAnswer" value="<%= question.correctAnswer %>">
+                            </input>
+                            <% }); %>
+                                <input type="hidden" name="email" value="<%= email%>">
+
+                                <input id="ss" type="submit" value="Submit"> </input>
                     </div>
 
-                    <% questions.forEach(question => {%>
-                        <input type="hidden" name="correctAnswer" value="<%= question.correctAnswer %>">
-                        </input>
-                        <% }); %>
-                            <input type="hidden" name="email" value="<%= email%>">
-
-
-                            <input id="QForm" type="submit" value="submit"> </input>
         </form>
 
     </main>

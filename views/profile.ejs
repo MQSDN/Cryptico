@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" />
-    
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!-- <link rel="stylesheet" href="background.css"> -->
@@ -43,35 +43,35 @@
         <% results.forEach(fromDB=> { %>
             <div class="myQuestion">
                 <section id="deleteSection">
-                    <form  action="delete/<%= fromDB.id %>?_method=DELETE" method="POST">
+                    <form action="delete/<%= fromDB.id %>?_method=DELETE" method="POST">
                         <button style="width: 250px;" class="to" id="deletbu" type="submit" value="Delete">Delete</button>
                     </form>
                 </section>
-                <button style="width: 250px; " class="to" id="toEdit" type="submit" >Edit</button>
+                <button style="width: 250px; " class="to" id="toEdit" type="submit">Edit</button>
                 <section id="updateSection" style="display: none;">
                     <div id="id01" class="modal">
-                    <form  class="updateForm" action="update/<%= fromDB.id %>?_method=PUT" method="POST">
-                        <fieldset>
-                            <legend>Update Quiz</legend>
-                            <input type="hidden" value="<%= fromDB.id %>">
-                            <label for="quistion">Question</label>
-                            <input type="text" name="question" value="<%= fromDB.question %>"><br>
-                            <label for="optionA">First Option</label>
-                            <input type="text" name="optionA" value="<%= fromDB.optiona %>"><br>
-                            <label for="optionB">Second Option</label>
-                            <input type="text" name="optionB" value="<%= fromDB.optionb %>"><br>
-                            <label for="optionC">Third Option</label>
-                            <input type="text" name="optionC" value=<%=fromDB.optionc %>><br>
-                            <label for="optionD">Fourth Option</label>
-                            <input type="text" name="optionD" value="<%= fromDB.optiond %>"><br>
-                            <label for="correctAnswer">Correct Answer</label>
-                            <input type="text" name="correctAnswer" value="<%= fromDB.correctAnswer %>">
-                            <br>
-                            <input style="width: 150px; font-weight: bold; text-align: center ; font-size: larger; height: 50px;"  type="submit" value="Submit">
-                            </input>
-                        </fieldset>
-                    </form>
-                </div>
+                        <form class="updateForm" action="update/<%= fromDB.id %>?_method=PUT" method="POST">
+                            <fieldset>
+                                <legend>Update Quiz</legend>
+                                <input type="hidden" value="<%= fromDB.id %>">
+                                <label for="quistion">Question</label>
+                                <input type="text" name="question" value="<%= fromDB.question %>"><br>
+                                <label for="optionA">First Option</label>
+                                <input type="text" name="optionA" value="<%= fromDB.optiona %>"><br>
+                                <label for="optionB">Second Option</label>
+                                <input type="text" name="optionB" value="<%= fromDB.optionb %>"><br>
+                                <label for="optionC">Third Option</label>
+                                <input type="text" name="optionC" value=<%=fromDB.optionc %>><br>
+                                <label for="optionD">Fourth Option</label>
+                                <input type="text" name="optionD" value="<%= fromDB.optiond %>"><br>
+                                <label for="correctAnswer">Correct Answer</label>
+                                <input type="text" name="correctAnswer" value="<%= fromDB.correctAnswer %>">
+                                <br>
+                                <input style="width: 150px; font-weight: bold; text-align: center ; font-size: larger; height: 50px;" type="submit" value="Submit">
+                                </input>
+                            </fieldset>
+                        </form>
+                    </div>
                 </section>
                 <h2>
                     <%= fromDB.question %>
