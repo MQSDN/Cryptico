@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link href="layout" rel="stylesheet">
     <link href="nav" rel="stylesheet">
-    <!-- <title>Home</title> -->
+
 </head>
 <style>
     body {
@@ -23,37 +23,44 @@
 
             <h1 style="line-height: calc(235px + 10vh);"> Mr. Quiz </h1>
 
+            <a class="starting" href="/login">Login</a>
+            <a class="registering" href="/register">Register</a>
     </header>
 
     <main>
-
-
         <% if (typeof message !== 'undefined' ) { %>
             <p>
                 <%= message %>
             </p>
             <% } %>
 
-                <a class="starting" href="/login">Login</a>
-                <a class="registering" href="/register">Register</a>
 
+                <div class="image">
+                    <figure>
+                        <p id="first">
+                            <b>Mr.Quiz</b> website provide quizzes (questions) in different fields such as Science, Math, Arts and History, here you can sharpen your knowledge. </p>
 
-                <p id="first">
-                    <b>Mr.Quiz</b> website provide quizzes (questions) in different fields such as Science, Math, Arts and History, here you can sharpen your knowledge. </p>
-
-
-                <p> The importance of general knowledge spans itself way beyond knowing the answers to a trivia and general knowledge quizzes. An individual’s personality can be judged by his up-to-date general knowledge of various subjects and current affairs
-                    in different domains that makes him an intelligent person with whom everyone would like to interact and would also like to ask him for some advice. From students to professionals to business owners to homemakers to retirees, this applies
-                    to virtually everyone in all walks of life. </p>
-
-                <div id="secondImage">
-                    <img class="second" src="https://images.unsplash.com/photo-1564207550505-5135c0fe4e76?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80" width="30%" height="30%" />
-                    <p>
-                        General knowledge is something that really helps us to grow both on personal as well as academic level. It narrows our sense of perceiving the world, understands, and analyzes the situations better as one would without proper knowledge. General knowledge
-                        opens gateways our thinking, and take it to a level from where the whole world seems to be a better place. It is an unpredictable world and we all need to stay aware and vigilant. An individual who is well aware with current affairs
-                        and facts about the world is called an intellectual.
-                    </p>
+                        <figcaption id="first">
+                            WELCOME TO MR. QUIZ
+                        </figcaption>
+                    </figure>
                 </div>
+
+
+                <div id="durstImage">
+
+                    <img id="firstIm" src="https://images.unsplash.com/photo-1554224154-22dec7ec8818?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTZ8fHBlbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" width="30%" height="30%" />
+
+                    <p class="firstpara"> The importance of general knowledge spans itself way beyond knowing the answers to a trivia and general knowledge quizzes. An individual’s personality can be judged by his up-to-date general knowledge of various subjects and current
+                        affairs in different domains that makes him an intelligent person with whom everyone would like to interact and would also like to ask him for some advice. From students to professionals to business owners to homemakers to retirees,
+                        this applies to virtually everyone in all walks of life. </p>
+                </div>
+
+                <p class="secpara">
+                    General knowledge is something that really helps us to grow both on personal as well as academic level. It narrows our sense of perceiving the world, understands, and analyzes the situations better as one would without proper knowledge. General knowledge
+                    opens gateways our thinking, and take it to a level from where the whole world seems to be a better place. It is an unpredictable world and we all need to stay aware and vigilant. An individual who is well aware with current affairs
+                    and facts about the world is called an intellectual.
+                </p>
     </main>
 
 
