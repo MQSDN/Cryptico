@@ -39,16 +39,6 @@
     <div class='light x8'></div>
     <div class='light x9'></div>
 
-
-
-
-
-
-
-
-
-    
-
     <section id="userQuestions" style="display: none;">
         <% results.forEach(fromDB=> { %>
             <div class="myQuestion">
@@ -86,6 +76,7 @@
                 <h2>
                     <%= fromDB.question %>
                 </h2>
+
                 <input type="radio" value="<%= fromDB.optiona %>" required>
                 <%= fromDB.optiona %>
                     </input>
@@ -109,7 +100,23 @@
     </section>
 
 
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script>
+        function handleButton(req, res) {
+            $('#toRenderQuestions').on('click', function(event) {
+                $("#userQuestions").css('display', 'block');
+            });
+            console.log('kaaaaaaaaaa')
+        }
+        handleButton();
+    </script>
+
     <section id="editDetails"></section>
+
 
 
     <script>

@@ -1,4 +1,5 @@
 body {
+    background-color: rgba(240, 220, 194, 0.575);
     margin: 0;
 }
 
@@ -491,7 +492,9 @@ input[type="radio"]:checked+label.btn::after {
 
 .to:hover {
     opacity: 0.8;
+
 }
+
 #userQuestions{
   text-align: center;
   margin-top: 20px;
@@ -529,3 +532,4 @@ input[type="radio"]:checked+label.btn::after {
   background-color: #f2f2f2;
   padding: 20px;
 }
+
