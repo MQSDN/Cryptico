@@ -15,7 +15,7 @@
     <title>profile</title>
 </head>
 
-<body>
+<body style="background-color:#E7E3DA;">
     <header id="home">
         <%- include('./layout/nav.ejs') %>
 
@@ -28,127 +28,147 @@
             </div>
 
     </header>
+    <main>
+        <div class='light x1'></div>
+        <div class='light x2'></div>
+        <div class='light x3'></div>
+        <div class='light x4'></div>
+        <div class='light x5'></div>
+        <div class='light x6'></div>
+        <div class='light x7'></div>
+        <div class='light x8'></div>
+        <div class='light x9'></div>
 
-    <div class='light x1'></div>
-    <div class='light x2'></div>
-    <div class='light x3'></div>
-    <div class='light x4'></div>
-    <div class='light x5'></div>
-    <div class='light x6'></div>
-    <div class='light x7'></div>
-    <div class='light x8'></div>
-    <div class='light x9'></div>
 
-    <section id="userQuestions" style="display: none;">
-        <% results.forEach(fromDB=> { %>
-            <div class="myQuestion">
-                <section id="deleteSection">
-                    <form action="delete/<%= fromDB.id %>?_method=DELETE" method="POST">
-                        <button style="width: 250px;" class="to" id="deletbu" type="submit" value="Delete">Delete</button>
-                    </form>
-                </section>
-                <button style="width: 250px; " class="to" id="toEdit" type="submit">Edit</button>
-                <section id="updateSection" style="display: none;">
-                    <div id="id01" class="modal">
-                        <form class="updateForm" action="update/<%= fromDB.id %>?_method=PUT" method="POST">
-                            <fieldset>
-                                <legend>Update Quiz</legend>
-                                <input type="hidden" value="<%= fromDB.id %>">
-                                <label for="quistion">Question</label>
-                                <input type="text" name="question" value="<%= fromDB.question %>"><br>
-                                <label for="optionA">First Option</label>
-                                <input type="text" name="optionA" value="<%= fromDB.optiona %>"><br>
-                                <label for="optionB">Second Option</label>
-                                <input type="text" name="optionB" value="<%= fromDB.optionb %>"><br>
-                                <label for="optionC">Third Option</label>
-                                <input type="text" name="optionC" value=<%=fromDB.optionc %>><br>
-                                <label for="optionD">Fourth Option</label>
-                                <input type="text" name="optionD" value="<%= fromDB.optiond %>"><br>
-                                <label for="correctAnswer">Correct Answer</label>
-                                <input type="text" name="correctAnswer" value="<%= fromDB.correctAnswer %>">
-                                <br>
-                                <input style="width: 150px; font-weight: bold; text-align: center ; font-size: larger; height: 50px;" type="submit" value="Submit">
-                                </input>
-                            </fieldset>
+
+
+
+
+
+
+
+
+
+        <section id="userQuestions" style="display: none;">
+            <% results.forEach(fromDB=> { %>
+                <div class="myQuestion">
+                    <section id="deleteSection">
+                        <form action="delete/<%= fromDB.id %>?_method=DELETE" method="POST">
+                            <button style="width: 250px;" class="to" id="deletbu" type="submit" value="Delete">Delete</button>
                         </form>
-                    </div>
-                </section>
-                <h2>
-                    <%= fromDB.question %>
-                </h2>
-
-                <input type="radio" value="<%= fromDB.optiona %>" required>
-                <%= fromDB.optiona %>
-                    </input>
-                    <br />
-                    <input type="radio" value="<%= fromDB.optionb %>" required>
-                    <%= fromDB.optionb %>
-                        </input>
-                        <br />
-                        <input type="radio" value="<%= fromDB.optionc %> " required>
-                        <%= fromDB.optionc %>
-                            </input>
-                            <br />
-                            <input type="radio" value="<%= fromDB.optiond %>" required>
-                            <%= fromDB.optiond %>
-                                </input>
-                                <hr />
-            </div>
-            <% }); %>
-
-
-    </section>
-
-
+                    </section>
+                    <button class="to" style="width: 250px;" id="toEdit" type="submit">Edit</button>
+                    <section id="updateSection" style="display: none;">
+                        <div id="id01" class="modal">
+                            <form class="updateForm" action="update/<%= fromDB.id %>?_method=PUT" method="POST">
+                                <fieldset>
+                                    <legend>Update Quiz</legend>
+                                    <input type="hidden" value="<%= fromDB.id %>">
+                                    <label for="quistion">Question</label>
+                                    <input type="text" name="question" value="<%= fromDB.question %>"><br>
+                                    <label for="optionA">First Option</label>
+                                    <input type="text" name="optionA" value="<%= fromDB.optiona %>"><br>
+                                    <label for="optionB">Second Option</label>
+                                    <input type="text" name="optionB" value="<%= fromDB.optionb %>"><br>
+                                    <label for="optionC">Third Option</label>
+                                    <input type="text" name="optionC" value=<%=fromDB.optionc %>><br>
+                                    <label for="optionD">Fourth Option</label>
+                                    <input type="text" name="optionD" value="<%= fromDB.optiond %>"><br>
+                                    <label for="correctAnswer">Correct Answer</label>
+                                    <input type="text" name="correctAnswer" value="<%= fromDB.correctAnswer %>">
+                                    <br>
+                                    <input style="width: 150px; font-weight: bold; text-align: center ; font-size: larger; height: 50px;" type="submit" value="Submit">
+                                    </input>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </section>
 
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-    </script>
-    <script>
-        function handleButton(req, res) {
-            $('#toRenderQuestions').on('click', function(event) {
-                $("#userQuestions").css('display', 'block');
+                    <ol class='c'>
+                        <li>
+                            <h2>The Question Is </h2>
+                            <h3 style="color: #c06014;">
+                                <%= fromDB.question %>
+                            </h3>
+                        </li>
+                        <hr>
+                        <li>
+                            <h3>First Option</h3>
+                            <h4>
+                                <%= fromDB.optiona %>
+                            </h4>
+                        </li>
+                        <hr>
+                        <li>
+                            <h3>Second Option</h3>
+                            <h4>
+                                <%= fromDB.optionb %>
+                            </h4>
+                        </li>
+                        <hr>
+                        <li>
+                            <h3>Third Option</h3>
+                            <h4>
+                                <%= fromDB.optionc %>
+                            </h4>
+                        </li>
+                        <hr>
+                        <li>
+                            <h3>Fourth Option</h3>
+                            <h4>
+                                <%= fromDB.optiond %>
+                            </h4>
+                        </li>
+                        <hr>
+                    </ol>
+
+
+
+
+
+                </div>
+                <% }); %>
+
+
+        </section>
+
+
+
+
+
+
+        <script>
+            let render = document.getElementById("toRenderQuestions");
+            let hide = document.getElementById('hideQuestions');
+            let section = document.getElementById('userQuestions');
+            let edit = document.getElementById('toEdit');
+            let update = document.getElementById('updateSection');
+            render.addEventListener('click', (event) => {
+                section.style.display = 'block';
+                hide.style.display = 'block';
+                render.style.display = "none";
             });
-            console.log('kaaaaaaaaaa')
-        }
-        handleButton();
-    </script>
+            hide.addEventListener('click', event => {
+                section.style.display = 'none';
+                hide.style.display = 'none';
+                render.style.display = "block";
+            });
+            edit.addEventListener('click', event => {
+                update.style.display = 'block';
+            });
+        </script>
 
-    <section id="editDetails"></section>
-
-
-
-    <script>
-        let render = document.getElementById("toRenderQuestions");
-        let hide = document.getElementById('hideQuestions');
-        let section = document.getElementById('userQuestions');
-        let edit = document.getElementById('toEdit');
-        let update = document.getElementById('updateSection');
-        render.addEventListener('click', (event) => {
-            section.style.display = 'block';
-            hide.style.display = 'block';
-            render.style.display = "none";
-        });
-        hide.addEventListener('click', event => {
-            section.style.display = 'none';
-            hide.style.display = 'none';
-            render.style.display = "block";
-        });
-        edit.addEventListener('click', event => {
-            update.style.display = 'block';
-        });
-    </script>
-
-    <script>
-        function handle(element) {
-            const formElement = document.getElementsByClassName('updateForm');
-            formElement.item(0).style.display = 'block';
-            formElement.item(1).style.display = 'block';
-            element.style.display = "none";
-        }
-    </script>
-
+        <script>
+            function handle(element) {
+                const formElement = document.getElementsByClassName('updateForm');
+                formElement.item(0).style.display = 'block';
+                formElement.item(1).style.display = 'block';
+                element.style.display = "none";
+            }
+        </script>
+    </main>
 </body>
 
 </html>
