@@ -2,6 +2,10 @@ html {
     scroll-behavior: smooth;
 }
 
+#username {
+    color: white;
+}
+
 @import url(https://fonts.googleapis.com/css?family=Ubuntu);
 .image {
     display: inline-block;
