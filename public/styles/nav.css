@@ -36,11 +36,6 @@ figcaption {
     text-align: center;
 }
 
-body {
-    background-color: rgba(240, 220, 194, 0.575);
-    margin: 0;
-}
-
 #firstIm {
     float: left;
     border-radius: 10%;
@@ -56,7 +51,7 @@ body {
     left: 0;
     background-color: #251d0eda;
     overflow-x: hidden;
-    transition: 0.5s;
+    transition: .9s;
     padding-top: 60px;
 }
 
@@ -265,10 +260,15 @@ main p {
     background-image: url(https://images.unsplash.com/photo-1581120083654-150513117cbf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80);
 }
 
+.register {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .starting {
     font-family: Georgia, 'Times New Roman', Times, serif;
     text-decoration: none;
-    font-size: 30px;
+    font-size: 2em;
     margin-left: 1000px;
     margin-right: auto;
     top: 370px;
@@ -291,9 +291,9 @@ main p {
     font-family: Georgia, 'Times New Roman', Times, serif;
     list-style: none;
     text-decoration: none;
-    font-size: 30px;
+    font-size: 2em;
     margin-left: 400px;
-    margin-right: auto;
+    /* margin-right: auto; */
     top: 370px;
     position: absolute;
     color: #fda708;
