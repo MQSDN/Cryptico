@@ -5,6 +5,10 @@ main {
     overflow: auto;
 }
 
+#usernameInScores {
+    color: black;
+}
+
 .heading {
     font-size: 32px;
     margin-right: 25px;
