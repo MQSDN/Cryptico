@@ -23,30 +23,32 @@
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star"></span>
-        <p>Your Scores.</p>
+
+        <p>Your Scores</p>
+        <span> <h3 id ="usernameInScores"> <%= username %> </h3></span>
         <hr style="border:3px solid #f1f1f1">
 
 
         <% scores.forEach((score ,index) =>{ %>
-            <% console.log(score.userresult); %>
-                <div class="row">
-                    <div class="side">
-                        <div>
-                            <%= `Score ${index+1}`%>
-                        </div>
-                    </div>
-                    <div class="middle">
-                        <div class="bar-container">
-                            <div class="bar-<%=(scores.length)-index%>"></div>
-                        </div>
-                    </div>
-                    <div class="side right">
-                        <div>
-                            <%= `${score.userresult}%`%>
-                        </div>
+
+            <div class="row">
+                <div class="side">
+                    <div>
+                        <%= `Score ${index+1}`%>
                     </div>
                 </div>
-                <% }); %>
+                <div class="middle">
+                    <div class="bar-container">
+                        <div class="bar-<%=(scores.length)-index%>"></div>
+                    </div>
+                </div>
+                <div class="side right">
+                    <div>
+                        <%= `${score.userresult}%`%>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
     </main>
 </body>
 
