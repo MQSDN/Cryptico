@@ -1,14 +1,7 @@
-body {
-    margin: 0;
-}
-
 main {
-    font-family: Arial;
-    margin: 0 auto;
-    /* Center website */
-    max-width: 800px;
-    /* Max width */
-    /* padding: 2px; */
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 40%;
     overflow: auto;
 }
 
@@ -17,10 +10,6 @@ main {
     margin-right: 25px;
     margin-left: 0px;
     font-family: cursive;
-}
-
-.fa {
-    font-size: 25px;
 }
 
 .checked {
@@ -115,7 +104,7 @@ main {
 }
 
 .row {
-    transform: translate(0px, -20px);
+    /* transform: translate(0px, -20px); */
     font-weight: bold;
     font-family: cursive;
 }

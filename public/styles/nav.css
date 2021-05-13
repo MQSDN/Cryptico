@@ -1,9 +1,36 @@
+#userServay {
+    border: rgb(175, 163, 163) solid;
+    width: 60%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 5%;
+}
+
+body {
+    margin-top: -30px !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h6 {
+    font-family: cursive;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+h3 {
+    font-family: cursive;
+    font-size: 2em;
+}
+
 html {
     scroll-behavior: smooth;
 }
 
 #username {
     color: white;
+    font-size: 2em;
+    font-family: cursive;
 }
 
 @import url(https://fonts.googleapis.com/css?family=Ubuntu);
@@ -24,7 +51,7 @@ html {
 }
 
 figure {
-    font-family: 'Ubuntu';
+    font-family: cursive;
     font-size: 20px;
     color: #282828;
     margin: 0;
@@ -50,6 +77,7 @@ figcaption {
     top: 0;
     left: 0;
     background-color: #251d0eda;
+    overflow: hidden;
     overflow-x: hidden;
     transition: .9s;
     padding-top: 60px;
@@ -59,7 +87,7 @@ figcaption {
     margin-left: 10px;
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 1.5em;
     color: #eea51f;
     display: block;
     transition: 0.3s;
@@ -131,11 +159,12 @@ figcaption {
 
 @import url("https://fonts.googleapis.com/css?family=Sacramento&display=swap");
 h1 {
-    font-size: calc(20px + 10vh);
-    line-height: calc(0px + 10vh);
+    font-size: 3em;
+    font-weight: bold;
+    line-height: calc(235px + 10vh);
     text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500, 0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
     color: #fff6a9;
-    font-family: "Sacramento", cursive;
+    font-family: cursive;
     text-align: center;
     animation: blink 12s infinite;
     -webkit-animation: blink 4s infinite;
@@ -253,7 +282,7 @@ main p {
 }
 
 #home {
-    height: 500px;
+    height: 350px;
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -263,16 +292,21 @@ main p {
 .register {
     display: flex;
     flex-wrap: wrap;
+    width: 50%;
+    position: absolute;
+    top: 32%;
+    left: 26%;
+    margin-right: auto;
+    margin-left: auto;
 }
 
-.starting {
-    font-family: Georgia, 'Times New Roman', Times, serif;
+.starting,
+.registering {
+    font-family: cursive;
     text-decoration: none;
     font-size: 2em;
-    margin-left: 1000px;
+    margin-left: auto;
     margin-right: auto;
-    top: 370px;
-    position: absolute;
     padding: 10px;
     border-radius: 20px;
     color: #fda708;
@@ -285,21 +319,6 @@ main p {
 
 .registering:hover {
     color: #ffffff;
-}
-
-.registering {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    list-style: none;
-    text-decoration: none;
-    font-size: 2em;
-    margin-left: 400px;
-    /* margin-right: auto; */
-    top: 370px;
-    position: absolute;
-    color: #fda708;
-    padding: 10px;
-    border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0.986);
 }
 
 
@@ -325,6 +344,15 @@ input[type="radio"] {
     padding: 2em;
 }
 
+.Maincontainer {
+    position: relative;
+    height: 80vh;
+    padding: 2em;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .slide-wrapper {
     position: relative;
     margin: 0 auto;
@@ -345,7 +373,7 @@ h5 {
     width: 70%;
     margin-right: auto;
     margin-left: auto;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: cursive;
     text-align: center;
     font-size: 50px;
 }
@@ -533,36 +561,50 @@ input[type="radio"]:checked+label.btn::after {
 }
 
 #profileHead {
-    display: block;
-    /* margin-left: 665px;
-    margin-top: 150px;
-    display: block; */
-    margin-left: 500px;
-    margin-top: 150px;
+    display: flex;
+    flex-wrap: wrap;
     width: 50%;
+    position: absolute;
+    top: 32%;
+    left: 25%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#profileHead a,
+#profileHead button {
+    height: fit-content;
+    font-size: 1.5em;
+}
+
+.showAndHide {
+    display: flex;
+    flex-wrap: wrap;
+    width: 45%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 2%;
 }
 
 .to {
-    background-color: #656665;
-    color: white;
-    padding: 14px 20px;
-    /* margin: 8px 0; */
+    background-color: #000000;
+    padding: 2%;
     border: none;
     cursor: pointer;
-    width: 70%;
-    margin-left: -359;
-    /* margin-right: auto; */
-    display: block;
-    height: 60px;
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 5px;
     text-align: center;
     text-decoration: none;
-    font-size: 17px;
-    font-weight: bold;
+    font-size: 1.5em;
+    color: #fda708;
+    vertical-align: middle;
 }
 
 .to:hover {
     opacity: 0.8;
+    color: #ffffff;
 }
 
 #userQuestions {
@@ -573,14 +615,19 @@ input[type="radio"]:checked+label.btn::after {
 }
 
 #toEdit {
-    display: inline-block;
-    height: 60px;
-    background-color: #656665;
+    margin-top: 2%;
+    margin-bottom: 5%;
+    background-color: rgba(32, 19, 8, 0.781);
 }
 
-#deletbu {
-    display: inline-block;
-    color: white;
+.delteform button {
+    background-color: rgba(32, 19, 8, 0.781);
+}
+
+.updateField {
+    border: rgb(0, 0, 0) solid;
+    box-shadow: rgb(61, 60, 60) 20px 20px 20px;
+    margin-bottom: 5%;
 }
 
 .updateForm input {
@@ -595,7 +642,7 @@ input[type="radio"]:checked+label.btn::after {
 }
 
 #id01 {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
 }

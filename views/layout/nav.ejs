@@ -1,43 +1,44 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="nav.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet"> -->
 </head>
 
 <body>
-    <header>
-        <nav>
 
-            <div id="mySidenav" class="sidenav">
+    <nav>
 
-                <div id="logo">
-                    <span class="profile-img"><img src="https://www.hrzone.com/sites/all/themes/pp/img/default-user.png" width="110px" /></span>
-                    <span class="userName"> <h3 id ="username"> <%= username %> </h3></span>
+        <div id="mySidenav" class="sidenav">
 
+            <div id="logo">
+                <span class="profile-img"><img src="https://www.hrzone.com/sites/all/themes/pp/img/default-user.png" width="110px" /></span>
+
+                <span> <h3 id ="username"> <%= username %> </h3></span>
+
+            </div>
+
+            <div id="options">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="/">Home</a>
+                <a href="/start">Quizzes</a>
+                <a href="/scores">Scores</a>
+                <a href="/profile">Profile</a>
+                <a href="/about-us">About-Us</a>
+
+            </div>
+
+
+            <div class="icon-bar">
+                <div> <a id="active2" href="/start"><i class="fa fa-search"></i></a>
                 </div>
-
-                <div id="options">
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                    <a href="/">Home</a>
-                    <a href="/start">Quizzes</a>
-                    <a href="/scores">Scores</a>
-                    <a href="/profile">Profile</a>
-                    <a href="/about-us">About-Us</a>
-
+                <div> <a id="active3" href="https://outlook.live.com/owa/0/?state=1&redirectTo=aHR0cHM6Ly9vdXRsb29rLmxpdmUuY29tL21haWwvMC9pbmJveA"><i class="fa fa-envelope"></i></a>
                 </div>
-
-
-                <div class="icon-bar">
-                    <div> <a id="active2" href="/start"><i class="fa fa-search"></i></a>
-                    </div>
-                    <div> <a id="active3" href="https://outlook.live.com/owa/0/?state=1&redirectTo=aHR0cHM6Ly9vdXRsb29rLmxpdmUuY29tL21haWwvMC9pbmJveA"><i class="fa fa-envelope"></i></a>
-                    </div>
-                    <div> <a id="active4" href="/profile"><i class="fa fa-user"></i></a>
-                    </div>
+                <div> <a id="active4" href="/profile"><i class="fa fa-user"></i></a>
                 </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+
 
 
 

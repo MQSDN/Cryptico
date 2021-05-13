@@ -1,7 +1,3 @@
-body {
-    margin-top: -62px !important;
-}
-
 #quizF {
     text-align: center;
 }
@@ -10,10 +6,16 @@ body {
     border: none;
 }
 
+#username {
+    color: white;
+    font-size: 2em;
+    font-family: cursive;
+}
+
 #category {
     width: 40%;
     height: 50px;
-    background-color: #251d0eda;
+    background-color: #2e1e0cc4;
     color: white;
     font-size: 20px;
     font-family: cursive;
@@ -25,7 +27,7 @@ body {
     margin-right: auto;
     width: 30%;
     height: 40px;
-    background-color: #251d0eda;
+    background-color: #2e1e0cc4;
     color: white;
     font-size: 20px;
 }
@@ -89,7 +91,7 @@ body {
     float: left;
     padding: 2%;
     color: white;
-    background-color: #251d0eda;
+    background-color: #2e1e0cc4;
     width: 10%;
 }
 
