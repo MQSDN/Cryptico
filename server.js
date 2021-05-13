@@ -9,8 +9,8 @@ const superagent = require('superagent');
 const bcrypt = require('bcrypt');
 const PORT = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL;
-let loginFlag = 0;
 
+let loginFlag = 0;
 
 const client = new pg.Client({
     connectionString: DATABASE_URL,
@@ -24,6 +24,7 @@ app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public/styles"));
+
 app.get('/', (req, res) => {
     res.render('index', { username: username });
 });
@@ -37,7 +38,8 @@ app.delete('/delete/:quiz_id', deleteQuiz);
 
 app.get("/logout", (req, res) => {
     loginFlag = 0;
-    res.render("index", { message: "You have logged out successfully", username: '' });
+    username = " "
+    res.render("index", { message: "You have logged out successfully", username: username });
 });
 
 app.get('/scores', (req, res) => {
@@ -70,9 +72,9 @@ app.get('/about-us', (req, res) => {
 });
 app.post('/register', handelRegister);
 
+
 let email = '';
 let username = '';
-
 async function handelRegister(request, res) {
 
     try {

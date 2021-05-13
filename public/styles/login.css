@@ -1,5 +1,5 @@
 body {
-    font-family: "Sacramento", cursive;
+    font-family: cursive;
 }
 
 input[type=text],
@@ -40,17 +40,17 @@ button:hover {
 /* Center the image and position the close button */
 
 .imgcontainer {
-    width: 265px;
-    margin-left: 395px;
-    text-align: center;
-    margin: 24px 0 12px 0;
-    position: relative;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50%;
 }
 
 img.avatar {
-    margin-left: 320px;
-    width: 40%;
-    border-radius: 50%;
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 span.psw {
@@ -62,33 +62,29 @@ span.psw {
 /* The Modal (background) */
 
 .modal {
-    /* display: none; */
-    /* Hidden by default */
-    position: absolute;
-    /* Stay in place */
     z-index: 1;
-    /* Sit on top */
-    /* left: 0;
-    top: 0; */
     width: 65%;
-    margin-left: 225px;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    /* overflow: auto; */
-    /* Enable scroll if needed */
-    /* background-color: rgb(0, 0, 0); */
-    /* Fallback color */
-    /* background-color: rgba(0, 0, 0, 0.4); */
-    /* Black w/ opacity */
-    /* padding-top: 60px; */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+label {
+    font-family: cursive;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+input {
+    background-color: rgb(199, 196, 196);
 }
 
 .modal-content {
-    /* background-color: #fefefe; */
-    margin: 5% auto 15% auto;
-    /* border: 1px solid #888; */
+    margin: 10% auto 10% auto;
     width: 80%;
+}
+
+fieldset {
+    margin: auto auto 20% auto;
 }
 
 .close {
@@ -140,7 +136,9 @@ hr {
 
 .registerbtn {
     opacity: 1;
-    margin-left: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 a {
@@ -172,29 +170,19 @@ a {
 
 .modal-content animate {
     background-color: #fefefe;
-    margin: 5% auto 15% auto;
+    margin: 10% auto 10% auto;
     border: 1px solid #888;
     width: 80%;
 }
 
 @import url("https://fonts.googleapis.com/css?family=Sacramento&display=swap");
 h2 {
-    font-size: calc(5px + 8vh);
-    line-height: calc(0px + 10vh);
+    font-size: calc(4px + 5vh);
+    /* line-height: calc(0px + 10vh); */
+    text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500, 0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
+    color: #fff6a9;
+    font-family: cursive;
     text-align: center;
-}
-
-#toRenderQuestions {
-    background-color: #5c5d5c;
-    color: white;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 25%;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    height: 62px;
 }
 
 #options {

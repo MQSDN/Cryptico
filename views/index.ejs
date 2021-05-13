@@ -3,29 +3,23 @@
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link href="layout" rel="stylesheet">
     <link href="nav" rel="stylesheet">
 
 </head>
-<style>
-    body {
-        background-color: rgba(240, 220, 194, 0.575);
-        margin: 0;
-    }
-</style>
+
 
 <body>
     <header id="home">
         <%- include('./layout/nav.ejs') %>
 
-            <h1 style="line-height: calc(235px + 10vh);"> Mr. Quiz </h1>
+            <h1> Mr. Quiz </h1>
 
             <div class="register">
-                <a class="starting" href="/login">Login</a>
-                <a class="registering" href="/register">Register</a>
+                <a class="to" href="/login">Login</a>
+                <a class="to" href="/register">Register</a>
             </div>
     </header>
 
@@ -70,7 +64,7 @@
 
 
 
-    <div class="container">
+    <div class="Maincontainer">
         <!-- BUTTONS (input/labels) -->
         <input type="radio" name="slider" id="slide-1-trigger" class="trigger" checked>
         <label class="btn" for="slide-1-trigger"></label>

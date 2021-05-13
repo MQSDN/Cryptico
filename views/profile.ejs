@@ -3,65 +3,49 @@
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <!-- <link rel="stylesheet" href="background.css"> -->
-    <!-- <link rel="stylesheet" href="login.css"> -->
-    <link rel="stylesheet" href="nav.css">
-
     <title>profile</title>
+    <link rel="stylesheet" href="nav.css">
 </head>
 
-<body style="background-color:#E7E3DA;">
+<body>
     <header id="home">
         <%- include('./layout/nav.ejs') %>
 
             <h1>Profile</h1>
-            <div id="profileHead" style="transform: translate(0px,-40px);">
-                <button class="to" id="toRenderQuestions" type="submit"> Show My Quizzes</button>
-                <button class="to" id="hideQuestions" style="display: none;" type="submit">Hide My Quizzes</button>
-                <a class="to" href="/addQuiz" style="margin-top: 20px;">Add Quiz</a> <br>
+
+            <div id="profileHead">
+                <a class="to" href="/addQuiz">Add Quiz</a> <br>
                 <a class="to" href="/logout">Logout</a>
             </div>
 
     </header>
     <main>
-        <div class='light x1'></div>
-        <div class='light x2'></div>
-        <div class='light x3'></div>
-        <div class='light x4'></div>
-        <div class='light x5'></div>
-        <div class='light x6'></div>
-        <div class='light x7'></div>
-        <div class='light x8'></div>
-        <div class='light x9'></div>
 
-
-
-
-
-
-
-
-
-
+        <div class="showAndHide">
+            <button class="to" id="hideQuestions" style="display: none;" type="submit">Hide My Quizzes</button>
+            <button class="to" id="toRenderQuestions" type="submit"> Show My Quizzes </button>
+        </div>
 
         <section id="userQuestions" style="display: none;">
             <% results.forEach(fromDB=> { %>
                 <div class="myQuestion">
+
                     <section id="deleteSection">
-                        <form action="delete/<%= fromDB.id %>?_method=DELETE" method="POST">
-                            <button style="width: 250px;" class="to" id="deletbu" type="submit" value="Delete">Delete</button>
+                        <form class='delteform' action="delete/<%= fromDB.id %>?_method=DELETE" method="POST">
+                            <button class="to" type="submit" value="Delete">Delete</button>
                         </form>
+
                     </section>
-                    <button class="to" style="width: 250px;" id="toEdit" type="submit">Edit</button>
+                    <button class="to" id="toEdit" type="submit">Edit</button>
+
+
                     <section id="updateSection" style="display: none;">
                         <div id="id01" class="modal">
                             <form class="updateForm" action="update/<%= fromDB.id %>?_method=PUT" method="POST">
-                                <fieldset>
-                                    <legend>Update Quiz</legend>
+                                <fieldset class="updateField">
+                                    <legend style="font-size: 2em;">Update Quiz</legend>
                                     <input type="hidden" value="<%= fromDB.id %>">
                                     <label for="quistion">Question</label>
                                     <input type="text" name="question" value="<%= fromDB.question %>"><br>
@@ -76,54 +60,51 @@
                                     <label for="correctAnswer">Correct Answer</label>
                                     <input type="text" name="correctAnswer" value="<%= fromDB.correctAnswer %>">
                                     <br>
-                                    <input style="width: 150px; font-weight: bold; text-align: center ; font-size: larger; height: 50px;" type="submit" value="Submit">
+                                    <input style="width: 20%; background-color: black; color: rgb(255, 153, 0); font-weight: bold; text-align: center ; font-size: larger; height: 1%;" type="submit" value="Submit">
                                     </input>
                                 </fieldset>
                             </form>
                         </div>
+
+
                     </section>
 
 
 
-                    <ol class='c'>
-                        <li>
-                            <h2>The Question Is </h2>
-                            <h3 style="color: #c06014;">
-                                <%= fromDB.question %>
-                            </h3>
-                        </li>
-                        <hr>
-                        <li>
-                            <h3>First Option</h3>
-                            <h4>
-                                <%= fromDB.optiona %>
-                            </h4>
-                        </li>
-                        <hr>
-                        <li>
-                            <h3>Second Option</h3>
-                            <h4>
-                                <%= fromDB.optionb %>
-                            </h4>
-                        </li>
-                        <hr>
-                        <li>
-                            <h3>Third Option</h3>
-                            <h4>
-                                <%= fromDB.optionc %>
-                            </h4>
-                        </li>
-                        <hr>
-                        <li>
-                            <h3>Fourth Option</h3>
-                            <h4>
-                                <%= fromDB.optiond %>
-                            </h4>
-                        </li>
-                        <hr>
-                    </ol>
+
+                    <form id='userServay' action="/submit" method="post">
+
+                        <h6>
+                            <%= fromDB.question %>
+                        </h6>
+
+                        <input type="radio" name="" value="">
+                        <h3>
+                            <%= fromDB.optiona %>
+                        </h3>
+                        </input>
 
 
+
+                        <input type="radio" name="" value="">
+                        <h3>
+                            <%= fromDB.optionb %>
+                        </h3>
+                        </input>
+
+
+                        <input type="radio" name="" value="">
+                        <h3>
+                            <%= fromDB.optionc %>
+                        </h3>
+                        </input>
+
+
+                        <input type="radio" name="" value="">
+                        <h3>
+                            <%= fromDB.optiond %>
+                        </h3>
+                        </input>
 
 
 
@@ -144,18 +125,24 @@
             let section = document.getElementById('userQuestions');
             let edit = document.getElementById('toEdit');
             let update = document.getElementById('updateSection');
+
+            let userServay = document.getElementById("userServay");
+
             render.addEventListener('click', (event) => {
                 section.style.display = 'block';
                 hide.style.display = 'block';
                 render.style.display = "none";
             });
+
             hide.addEventListener('click', event => {
                 section.style.display = 'none';
                 hide.style.display = 'none';
                 render.style.display = "block";
             });
+
             edit.addEventListener('click', event => {
                 update.style.display = 'block';
+                userServay.style.display = "none";
             });
         </script>
 
